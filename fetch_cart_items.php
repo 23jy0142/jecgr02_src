@@ -1,3 +1,4 @@
+<!-- cart.phpで非同期通信を行う為のAPI定義です。
 <?php
 require_once 'cart_functions.php';
 header('Content-Type: application/json');

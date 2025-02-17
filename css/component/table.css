@@ -1,0 +1,26 @@
+@charset "utf-8";
+table {
+    font-size: 40px;
+    width: 100%; /* 左半分全体を使う */
+    border-collapse: collapse;
+    background-color: rgb(191, 191, 191);
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+th{
+    background-color: #989595df;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+tfoot{
+    background-color: #989595df;
+}
+tfoot td{
+    text-align: center;
+    font-weight: bold;
+}

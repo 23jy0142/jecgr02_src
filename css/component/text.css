@@ -1,0 +1,44 @@
+@charset "utf-8";
+    /* コンテナを中央に配置 */
+.passward_text {
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 要素を縦方向に並べる */
+    justify-content: center; /* 垂直方向の中央揃え */
+    align-items: center; /* 水平方向の中央揃え */
+    margin: 0;
+}
+  
+  /* 入力フィールドのスタイル */
+  .passward_text input[type="password"],
+  .passward_text input[type="submit"] {
+    display: block; /* ブロック要素として表示 */
+    width: 300px; /* 入力フィールドの幅 */
+    padding: 15px; /* 内側の余白 */
+    font-size: 20px; /* 文字のサイズ */
+    border: 2px solid #ccc; /* 枠線 */
+    border-radius: 10px; /* 角を丸くする */
+    margin: 10px 0; /* 上下の余白 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加 */
+  }
+  
+  /* フォーカス時のスタイル */
+  .passward_text input[type="password"]:focus,
+  .passward_text input[type="submit"]:focus {
+    border-color: #007bff; /* 枠線の色を変更 */
+    outline: none; /* デフォルトのアウトラインを消す */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* フォーカス時の影 */
+  }
+  
+  /* 送信ボタンのスタイル */
+  .passward_text input[type="submit"] {
+    background-color: #007bff; /* 背景色 */
+    color: #fff; /* 文字色 */
+    cursor: pointer; /* ホバー時のポインター表示 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* ホバー時のアニメーション */
+  }
+  
+  /* 送信ボタンのホバー時 */
+  .passward_text input[type="submit"]:hover {
+    background-color: #0056b3; /* ホバー時の色 */
+    transform: scale(1.05); /* 少し大きくなる */
+  }

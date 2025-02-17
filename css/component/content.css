@@ -1,0 +1,11 @@
+@charset "utf-8";
+.left_box {
+    position: relative;
+
+}
+
+.right_box {
+    position: relative;
+    top: -100px;
+    left: 250px;
+}
