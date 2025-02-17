@@ -11,8 +11,8 @@
 <body>
 
     <h1>お支払い方法の選択</h1>
-    <button onclick="location.href='complete.php?method=cash'">現金</button>
-    <button onclick="location.href='complete.php?method=credit'">クレジット</button>
+    <button onclick="location.href='cash_payment.php?method=cash'">現金</button>
+    <button onclick="location.href='cash_payment.php?method=credit'">クレジット</button>
 
 </body>
 </html>
