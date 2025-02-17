@@ -1,0 +1,12 @@
+@charset "utf-8";
+.container .btn_saikai{
+    text-align: center;
+}
+.box_container{
+  display: flex; /* フレックスボックスを使用 */
+  justify-content: space-between; /* 要素間を均等に分割 */
+  align-items: center; /* 垂直方向の中央揃え */
+  padding: 0 20px; /* 左右の余白を追加 */
+  box-sizing: border-box; /* パディングを含めた幅計算 */
+}
+
