@@ -1,5 +1,9 @@
 <?php
-$selfregister_id = 101; // レジのID
+require_once 'db_connect.php';
+require_once 'cart_functions.php';
+
+$selfregister_id = "101";
+update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に更新
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +44,7 @@ $selfregister_id = 101; // レジのID
                             }
                             $('#cart-items tbody').html(tableContent);
                         } else {
-                            alert('データの取得に失敗しました: ' + response.message);
+                            console.error('データ取得エラー:', response.message);
                         }
                     },
                     error: function(xhr, status, error) {
@@ -55,6 +59,23 @@ $selfregister_id = 101; // レジのID
             // 2秒ごとにデータ更新
             setInterval(updateCartItems, 2000);
         });
+        function goToPayment() {
+            $.ajax({
+                url: 'update_status.php',
+                type: 'POST',
+                data: { status: '2' },
+                success: function(response) {
+                    if (response.trim() === 'success') {
+                        window.location.href = 'payment.php';
+                    } else {
+                        alert('ステータス更新に失敗しました');
+                    }
+                },
+                error: function() {
+                    alert('通信エラーが発生しました');
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -71,7 +92,8 @@ $selfregister_id = 101; // レジのID
         </thead>
         <tbody></tbody>
     </table>
-    <button onclick="location.href='payment.php'">お支払いへ</button>
+
+    <button onclick="goToPayment()">お支払いへ</button>
 
 </body>
 </html>
