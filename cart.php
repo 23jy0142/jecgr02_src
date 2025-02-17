@@ -1,6 +1,5 @@
 <?php
-require_once 'cart_functions.php';
-$cart_items = get_cart_items(101);
+$selfregister_id = 101; // レジのID
 ?>
 
 <!DOCTYPE html>
@@ -16,11 +15,52 @@ $cart_items = get_cart_items(101);
         th { background-color: #f4f4f4; }
         button { font-size: 16px; padding: 10px 20px; margin-top: 10px; cursor: pointer; }
     </style>
+    <script>
+        $(document).ready(function() {
+            function updateCartItems() {
+                $.ajax({
+                    url: 'fetch_cart_items.php', // 非同期でデータ取得
+                    type: 'GET',
+                    data: { selfregister_id: <?= $selfregister_id ?> },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            let tableContent = '';
+                            if (response.data.length > 0) {
+                                $.each(response.data, function(index, item) {
+                                    tableContent += `<tr>
+                                                        <td>${item.item_id}</td>
+                                                        <td>${item.product_name}</td>
+                                                        <td>${item.quantity}</td>
+                                                        <td>${item.price} 円</td>
+                                                    </tr>`;
+                                });
+                            } else {
+                                tableContent = '<tr><td colspan="4">カートが空です</td></tr>';
+                            }
+                            $('#cart-items tbody').html(tableContent);
+                        } else {
+                            alert('データの取得に失敗しました: ' + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAXエラー:', status, error);
+                    }
+                });
+            }
+
+            // 初回読み込み
+            updateCartItems();
+
+            // 2秒ごとにデータ更新
+            setInterval(updateCartItems, 2000);
+        });
+    </script>
 </head>
 <body>
 
     <h1>カート情報</h1>
-    <table>
+    <table id="cart-items">
         <thead>
             <tr>
                 <th>JANコード</th>
@@ -29,16 +69,7 @@ $cart_items = get_cart_items(101);
                 <th>金額</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($cart_items as $item): ?>
-                <tr>
-                    <td><?= $item['item_id'] ?></td>
-                    <td><?= $item['product_name'] ?></td>
-                    <td><?= $item['quantity'] ?></td>
-                    <td><?= $item['price'] ?> 円</td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
+        <tbody></tbody>
     </table>
     <button onclick="location.href='payment.php'">お支払いへ</button>
 
