@@ -3,13 +3,34 @@ require_once 'cart_functions.php';
 $selfregister_id = 101;
 delete_cart_items($selfregister_id);
 
-// 支払い方法を取得
-$method = isset($_GET['method']) ? $_GET['method'] : '不明';
+// 1. データベース接続情報
+$host = '10.64.144.5';
+$dbname = '23jya02';  // データベース名
+$username = '23jya02';      // DBユーザー名
+$password = '23jya02';  // DBパスワード
 
-// お釣り情報を取得
-$total_amount = isset($_GET['total_amount']) ? intval($_GET['total_amount']) : 0;
-$input_amount = isset($_GET['input_amount']) ? intval($_GET['input_amount']) : 0;
-$change = max($input_amount - $total_amount, 0);
+try {
+    // PDOでデータベースに接続
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // 支払い方法を取得
+    $method = isset($_GET['method']) ? $_GET['method'] : '不明';
+
+    // お釣り情報を取得
+    $total_amount = isset($_GET['total_amount']) ? intval($_GET['total_amount']) : 0;
+    $input_amount = isset($_GET['input_amount']) ? intval($_GET['input_amount']) : 0;
+    $change = max($input_amount - $total_amount, 0);
+
+    // 6. `sales_items` に支払い情報を保存
+    $stmt = $pdo->prepare("INSERT INTO sales_items (item_id, selfregister_id,total_amount) 
+                           SELECT ?,?,? FROM master_item WHERE item_id = ?");
+    $stmt->execute([$item_id, $selfregister_id, $total_amount]);
+
+} catch (Exception $e) {
+    echo "<h2>エラーが発生しました</h2>";
+    echo "<p>" . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
+}
 ?>
 
 <!DOCTYPE html>
