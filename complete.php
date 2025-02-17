@@ -1,5 +1,6 @@
 <?php
 require_once 'cart_functions.php';
+
 $selfregister_id = 101;
 delete_cart_items($selfregister_id);
 
@@ -21,6 +22,12 @@ $change = max($input_amount - $total_amount, 0);
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         button { font-size: 16px; padding: 10px 20px; margin-top: 10px; cursor: pointer; }
     </style>
+    <script>
+        // 5秒後に自動でホーム画面（index.php）へ遷移
+        setTimeout(function() {
+            window.location.href = "index.php";
+        }, 5000);
+    </script>
 </head>
 <body>
 
@@ -33,6 +40,7 @@ $change = max($input_amount - $total_amount, 0);
         <p><strong>おつり: <?= $change ?> 円</strong></p>
     <?php endif; ?>
 
+    <p>5秒後にホーム画面に戻ります...</p>
     <button onclick="location.href='index.php'">ホームに戻る</button>
 
 </body>
