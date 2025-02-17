@@ -1,0 +1,95 @@
+/* @charset "utf-8";
+.top_box{
+    display: flex;
+    justify-content: space-evenly;
+}
+.top_item{
+    width: 250px;
+    height: 250px;
+    padding: 0px;
+    margin: 10px;
+    background-color: rgb(151, 233, 228);
+}
+.under_box{
+    display: flex;
+    justify-content: space-evenly;
+}
+.under_item{
+    width: 250px;
+    height: 250px;
+    padding: 0px;
+    margin: 10px;
+    background-color: rgb(151, 233, 228);
+}
+
+.top_item p{
+    margin-top: 0px;
+    padding: 0px;
+    background-color: rgb(205, 209, 209);
+    color: aliceblue;
+}
+.under_item p{
+    margin-top: 0px;
+    padding: 0px;
+    background-color: rgb(205, 209, 209);
+    color: aliceblue;
+}
+.stop_text h2{
+    color: blue;
+    font-size: 4em;
+    text-align: center;
+}
+.left_box{
+    width: 50%; 
+    padding: 10px;
+    box-sizing: border-box;
+}
+.rihgt_box{
+    width: 50%; 左半分の幅 
+    padding: 10px;
+    box-sizing: border-box;
+} */
+.btn_box{
+    display: flex;
+    justify-content: center;
+}
+.saikai_box{
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    margin: 0; /* 余白なし */
+}
+.right_box1{
+    width: 50%; /* コンテナ全体の45%を占める */
+    background-color: #e0e0e0; /* 背景色（例） */
+    padding: 20px; /* 内側の余白 */
+    border-radius: 10px; /* 角丸 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボックスの影 */
+    text-align: center; /* テキストを中央揃え */
+    margin-top: 150px;
+    font-size: 40px;
+}
+.right_box1 i{
+    font-size: 60px;
+}
+/* 左側ボックスのスタイル */
+.left_box2{
+    width: 50%; /* コンテナ全体の45%を占める */
+    background-color: #f0f0f0; /* 背景色（例） */
+    padding: 20px; /* 内側の余白 */
+    border-radius: 10px; /* 角丸 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボックスの影 */
+    text-align: center; /* テキストを中央揃え */
+    margin-top: 100px;
+}
+
+/* 右側ボックスのスタイル */
+.right_box2 {
+    width: 50%; /* コンテナ全体の45%を占める */
+    background-color: #e0e0e0; /* 背景色（例） */
+    padding: 20px; /* 内側の余白 */
+    border-radius: 10px; /* 角丸 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボックスの影 */
+    text-align: center; /* テキストを中央揃え */
+    margin-top: 100px;
+}

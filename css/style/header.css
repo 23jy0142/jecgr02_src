@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+.header {
+    background-color: #595959;
+    padding: 10px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header span{
+    color: aliceblue;
+}
