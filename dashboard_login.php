@@ -16,18 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("データベース接続エラー: " . $e->getMessage());
     }
 
+    $employee_number = $_POST['employee_number'];
     $hashedPassword = hash('sha256', $_POST['password']);
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM employee WHERE employee_password = :hashedPassword");
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM employee WHERE employee_number = :employee_number AND employee_password = :hashedPassword");
+    $stmt->bindParam(':employee_number', $employee_number, PDO::PARAM_INT);
     $stmt->bindParam(':hashedPassword', $hashedPassword, PDO::PARAM_STR);
     $stmt->execute();
     $count = intval($stmt->fetchColumn());
 
     if ($count > 0) {
-        header("Location: cart.php");
+        header("Location: register_dashboard.php");
         exit();
     } else {
-        header("Location: ageConfig.php?error=パスワードが間違っています");
+        header("Location: dashboard_login.php?error=社員番号またはパスワードが間違っています");
         exit();
     }
 }
@@ -38,18 +40,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>年齢確認</title>
+    <title>管理端末ログイン</title>
 </head>
 <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 20px;}
-    h1 { color: #69be86; }
+    h1 { color: #333; }
     .btn { background-color: #9cf;}
 </style>
 
 <body>
-    <h1>年齢確認が必要です</h1>
+    <h1>ログイン</h1>
     <form action="" method="post">
-        <input type="password" name="password" required />
+        <label for="employee_number">社員番号:</label><br>
+        <input type="number" name="employee_number" required /><br>
+        <label for="password">パスワード:</label><br>
+        <input type="password" name="password" required /><br>
         <input type="submit" value="確定" class="btn" />
     </form>
     <?php if (isset($_GET['error'])): ?>
