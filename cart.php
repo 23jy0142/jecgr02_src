@@ -76,6 +76,23 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                 }
             });
         }
+        function callingStaff() {
+            $.ajax({
+                url: 'update_status.php',
+                type: 'POST',
+                data: { status: '3' },
+                success: function(response) {
+                    if (response.trim() === 'success') {
+                        window.location.href = 'callingStaff.php';
+                    } else {
+                        alert('ステータス更新に失敗しました');
+                    }
+                },
+                error: function() {
+                    alert('通信エラーが発生しました');
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -94,6 +111,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     </table>
 
     <button onclick="goToPayment()">お支払いへ</button>
-
+    <a href="cart_edit.php">商品入力</a>
+    <button onclick="callingStaff()">呼び出し</button>
 </body>
 </html>
