@@ -21,14 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM employee WHERE employee_password = :hashedPassword");
     $stmt->bindParam(':hashedPassword', $hashedPassword, PDO::PARAM_STR);
     $stmt->execute();
-    $count = intval($stmt->fetchColumn()); // ← 修正ポイント
+    $count = intval($stmt->fetchColumn());
 
     if ($count > 0) {
-        // 🔹 パスワードが正しければ遷移
         header("Location: pause.php");
         exit();
     } else {
-        // 🔹 間違っていればエラーメッセージ
         header("Location: pause_confirmation.php?error=パスワードが間違っています");
         exit();
     }
