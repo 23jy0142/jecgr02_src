@@ -52,9 +52,9 @@ try {
     </style>
     <script>
         // 5秒後に自動でホーム画面（index.php）へ遷移
-        // setTimeout(function() {
-        //     window.location.href = "index.php";
-        // }, 5000);
+        setTimeout(function() {
+            window.location.href = "index.php";
+        }, 5000);
     </script>
 </head>
 <body>
