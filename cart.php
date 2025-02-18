@@ -111,7 +111,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     </table>
 
     <button onclick="goToPayment()">お支払いへ</button>
-    <a href="cart_edit.php">商品入力</a>
+    <a href="cart_edit_login.php">商品入力</a>
     <button onclick="callingStaff()">呼び出し</button>
 </body>
 </html>
