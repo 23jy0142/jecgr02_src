@@ -11,6 +11,7 @@
             text-align: center;
             padding: 20px;
             background-color: #f0f0f0;
+            position: relative;
         }
 
         .container {
@@ -92,28 +93,30 @@
         }
 
         .notification {
-            background: #ffcccc;
-            height: 40px;
-            border-radius: 4px;
-            padding: 5px;
-            font-size: 10px;
-            display: flex;
+            background: #ff4d4d;
+            color: white;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
             align-items: center;
             justify-content: space-between;
             margin-top: auto;
-            visibility: hidden; /* 初期は非表示 */
+            text-align: center;
+            cursor: pointer;
         }
 
         .notification.active {
-            visibility: visible; /* 通知があるときに表示 */
+            display: flex;
         }
 
         .notification button {
-            background: #a0a0a0;
+            background: white;
+            color: #ff4d4d;
             border: none;
             padding: 2px 5px;
-            font-size: 12px;
             cursor: pointer;
+            font-size: 12px;
             border-radius: 4px;
         }
 
@@ -138,77 +141,77 @@
 
     <script>
         function updateRegisters() {
-    $.ajax({
-        url: 'fetch_register_data.php',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            console.log("🚀 AJAX Response:", response); // デバッグログ
+            $.ajax({
+                url: 'fetch_register_data.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    console.log("🚀 AJAX Response:", response); // デバッグログ
 
-            if (!response.success) {
-                console.error("❌ Fetch Failed:", response.error);
-                return;
-            }
+                    if (!response.success) {
+                        console.error("❌ Fetch Failed:", response.error);
+                        return;
+                    }
 
-            $('#register-container').html('');
-            response.data.forEach(register => {
-                console.log(`ℹ️ レジ ${register.selfregister_id} のデータ:`, register);
+                    $('#register-container').html('');
+                    
+                    response.data.forEach(register => {
+                        console.log(`ℹ️ レジ ${register.selfregister_id} のデータ:`, register);
 
-                let notificationText = '';
-                let notificationClass = '';
+                        let notificationText = '';
+                        let notificationClass = '';
 
-                if (register.selfregister_status == "3") {
-                    notificationText = "⚠️ スタッフ呼び出し";
-                    notificationClass = "active";
-                } else if (register.selfregister_status == "4") {
-                    notificationText = "✅ お会計完了";
-                    notificationClass = "active";
-                }
+                        if (register.selfregister_status == "3") {
+                            notificationText = "⚠️ スタッフ呼び出し";
+                            notificationClass = "active";
+                        } else if (register.selfregister_status == "4") {
+                            notificationText = "✅ お会計完了";
+                            notificationClass = "active";
+                        }
 
-                let registerHTML = `
-                    <div class='register-box'>
-                        <div class='register-header'>${register.selfregister_id}番レジ</div>
-                        <div class='total-amount'>合計金額: ${Math.floor(register.total_price)} 円</div>
-                        <div class='register-content'>
-                            <div class='items'>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>JANコード</th>
-                                            <th>商品名</th>
-                                            <th>個数</th>
-                                            <th>金額</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${register.items.length > 0 ? register.items.map(item => `
-                                            <tr>
-                                                <td>${item.item_id}</td>
-                                                <td>${item.product_name}</td>
-                                                <td>${item.quantity}</td>
-                                                <td>${Math.floor(item.price)} 円</td>
-                                            </tr>
-                                        `).join('') : `<tr><td colspan='4'>カートが空です</td></tr>`}
-                                    </tbody>
-                                </table>
+                        let registerHTML = `
+                            <div class='register-box' id='register-${register.selfregister_id}'>
+                                <div class='register-header'>${register.selfregister_id}番レジ</div>
+                                <div class='total-amount'>合計金額: ${Math.floor(register.total_price)} 円</div>
+                                <div class='register-content'>
+                                    <div class='items'>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>JANコード</th>
+                                                    <th>商品名</th>
+                                                    <th>個数</th>
+                                                    <th>金額</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${register.items.length > 0 ? register.items.map(item => `
+                                                    <tr>
+                                                        <td>${item.item_id}</td>
+                                                        <td>${item.product_name}</td>
+                                                        <td>${item.quantity}</td>
+                                                        <td>${Math.floor(item.price)} 円</td>
+                                                    </tr>
+                                                `).join('') : `<tr><td colspan='4'>カートが空です</td></tr>`}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class='notification ${notificationClass}' id='notification-${register.selfregister_id}'>
+                                    ${notificationText}
+                                    <button onclick='clearNotification(${register.selfregister_id})'>〆</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class='notification ${notificationClass}' id='notification-${register.selfregister_id}'>
-                            ${notificationText}
-                            <button onclick='clearNotification(${register.selfregister_id})'>〆</button>
-                        </div>
-                    </div>
-                `;
+                        `;
 
-                $('#register-container').append(registerHTML);
+                        $('#register-container').append(registerHTML);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("❌ AJAX Error:", status, error);
+                }
             });
-        },
-        error: function(xhr, status, error) {
-            console.error("❌ AJAX Error:", status, error);
         }
-    });
-}
-
 
         function clearNotification(register_id) {
             $.ajax({
