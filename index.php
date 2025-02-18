@@ -16,5 +16,8 @@ require_once 'cart_functions.php';
 <body>
     <h1>いらっしゃいませ</h1>
     <button onclick="location.href='cart.php'">開始</button>
+    <footer>
+        <button onclick="location.href='pause_confirmation.php'">休止</button>
+    </footer>
 </body>
 </html>
