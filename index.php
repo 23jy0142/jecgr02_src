@@ -16,6 +16,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     function callingStaff() {
             $.ajax({
@@ -53,6 +54,9 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     }
 </script>
 <body>
+    <div class="header_right">
+        <span id="now"></span>
+    </div>
     <h1>いらっしゃいませ</h1>
     <button onclick="location.href='cart.php'">開始</button>
     <button onclick="callingStaff()">呼び出し</button>
@@ -60,6 +64,6 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     <!-- <footer>
         <button onclick="location.href='pause_confirmation.php'">休止</button>
     </footer> -->
-
+    <script src="Z:\PHP\jecgr02_src\js\time.js"></script>
 </body>
 </html>
