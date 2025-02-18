@@ -1,0 +1,101 @@
+@charset "utf-8";
+.btn {
+  text-align: center;
+  font-weight: bold;
+  /* padding: 12px 48px; 
+    border-radius: 12px;  */
+  /* text-decoration: none; 
+    color: #fff;  */
+}
+.btn_blue {
+  /* width: 50px; */
+  margin: 10px;
+  padding: 1rem 4rem;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #44f;
+}
+
+.btn_gray {
+  margin: 10px;
+  padding: 1rem 4rem;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(155, 155, 157);
+}
+.btn_green {
+  margin: 10px;
+  padding: 1rem 4rem;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #96be86;
+}
+
+
+
+.btn_red {
+  margin: 10px;
+  padding: 1rem 4rem;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: red;
+}
+
+.btn_yellow {
+  margin: 10px;
+  padding: 1rem 4rem;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(203, 203, 2, 0.511);
+}
+.btn_saikai {
+  margin-top: 150px;
+  padding: 60px 100px; /* ボタンの内側余白 */
+  font-size: 60px; /* テキストのサイズ */
+  font-weight: bold; /* テキストを太字に */
+  color: #fff; /* 文字色 */
+  background-color: #007bff; /* ボタン背景色 */
+  border: none; /* ボーダーなし */
+  border-radius: 10px; /* ボタンの角を丸く */
+  text-align: center; /* テキスト中央揃え */
+  text-decoration: none; /* アンダーラインを消す */
+}
+.btn_green2 {
+  background: #7bed61;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 250px;
+  padding: 50px 25px;
+  font-family: "Noto Sans Japanese";
+  color: #333;
+  line-height: 1.8;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+  font-size: 50px;
+}
+.btn_gray2 {
+  background: #616161;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 250px;
+  padding: 50px 25px;
+  font-family: "Noto Sans Japanese";
+  color: #333;
+  line-height: 1.8;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+  font-size: 50px;
+}

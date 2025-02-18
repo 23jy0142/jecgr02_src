@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+/* グリットレイアウトはbody ではなく細かい枠組みにわけて*/
+
+body {
+  background-image: url("../../image/background_image1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
