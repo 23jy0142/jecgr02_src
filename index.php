@@ -1,8 +1,3 @@
-<?php
-require_once 'cart_functions.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
