@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <h1>ログイン</h1>
     <form action="" method="post">
         <label for="employee_number">社員番号:</label><br>
-        <input type="number" name="employee_number" required /><br>
+        <input type="text" name="employee_number" required /><br>
         <label for="password">パスワード:</label><br>
         <input type="password" name="password" required /><br>
         <input type="submit" value="確定" class="btn" />
