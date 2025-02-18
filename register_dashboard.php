@@ -167,6 +167,9 @@
                         } else if (register.selfregister_status == "4") {
                             notificationText = "✅ お会計完了";
                             notificationClass = "active";
+                        } else if (register.selfregister_status == "5") {
+                            notificationText = "ℹ️ 休止中";
+                            notificationClass = "active";
                         }
 
                         let registerHTML = `

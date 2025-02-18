@@ -20,6 +20,7 @@ foreach ($cart_items as $item) {
         input { font-size: 16px; padding: 5px; margin-top: 5px; width: 200px; }
         button { font-size: 16px; padding: 10px 20px; margin-top: 10px; cursor: pointer; }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function calculateChange() {
             var totalAmount = <?= $total_amount ?>;
@@ -34,6 +35,23 @@ foreach ($cart_items as $item) {
             document.getElementById('complete-payment').setAttribute("onclick", 
                 `location.href='complete.php?method=cash&total_amount=${totalAmount}&input_amount=${inputAmount}'`);
         }
+        function callingStaff() {
+            $.ajax({
+                url: 'update_status.php',
+                type: 'POST',
+                data: { status: '3' },
+                success: function(response) {
+                    if (response.trim() === 'success') {
+                        window.location.href = 'callingStaff.php';
+                    } else {
+                        alert('ステータス更新に失敗しました');
+                    }
+                },
+                error: function() {
+                    alert('通信エラーが発生しました');
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -46,4 +64,7 @@ foreach ($cart_items as $item) {
     <div>不足金額: <span id="shortage">0 円</span></div>
     <button id="complete-payment" disabled>お支払い完了</button>
 </body>
+<footer>
+    <button onclick="callingStaff()">呼び出し</button>
+</footer>
 </html>
