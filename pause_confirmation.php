@@ -1,4 +1,6 @@
 <?php
+require_once 'db_connect.php';
+require_once 'cart_functions.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -45,12 +47,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     h1 { color: #333; }
     .btn { background-color: #9cf;}
 </style>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function pauseRegister() {
+            $.ajax({
+                url: 'update_status.php',
+                type: 'POST',
+                data: { status: '5' },
+                success: function(response) {
+                    if (response.trim() === 'success') {
+                        window.location.href = 'pause_confirmation.php';
+                    } else {
+                        alert('ステータス更新に失敗しました');
+                    }
+                },
+                error: function() {
+                    alert('通信エラーが発生しました');
+                }
+            });
+    }
+</script>
 <body>
     <h1>休止確認パスワード</h1>
     <form action="" method="post">
         <input type="password" name="password" required />
-        <input type="submit" value="確定" class="btn" />
+        <input type="submit" value="確定" class="btn" onclick="pauseRegister()"/>
     </form>
     <?php if (isset($_GET['error'])): ?>
         <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
