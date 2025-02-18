@@ -50,13 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
     <h1>休止確認パスワード</h1>
-    <?php if (isset($_GET['error'])): ?>
-        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
-    <?php endif; ?>
-
     <form action="" method="post">
         <input type="password" name="password" required />
         <input type="submit" value="確定" class="btn" />
     </form>
+    <?php if (isset($_GET['error'])): ?>
+        <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+    <?php endif; ?>
 </body>
 </html>
