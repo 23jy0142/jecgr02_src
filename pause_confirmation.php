@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $count = intval($stmt->fetchColumn());
 
     if ($count > 0) {
+        
         header("Location: pause.php");
         exit();
     } else {
@@ -56,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 data: { status: '5' },
                 success: function(response) {
                     if (response.trim() === 'success') {
-                        window.location.href = 'pause_confirmation.php';
+                        window.location.href = 'pause.php';
                     } else {
                         alert('ステータス更新に失敗しました');
                     }
