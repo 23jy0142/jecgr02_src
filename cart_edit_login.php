@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン</title>
+    <title>商品追加ログイン</title>
 </head>
 <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 20px;}
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </style>
 
 <body>
-    <h1>休止確認パスワード</h1>
+    <h1>ログイン</h1>
     <form action="" method="post">
         <input type="password" name="password" required />
         <input type="submit" value="確定" class="btn" />
