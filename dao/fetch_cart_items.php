@@ -10,7 +10,7 @@ $link1 = null;
 school_db_connect($link1);
 
 if ($link1) {
-    $query = "SELECT item_id, product_name, quantity, price,age_vertification FROM cart_items WHERE selfregister_id = ?";
+    $query = "SELECT item_id, product_name, quantity, price,age_verification FROM cart_items WHERE selfregister_id = ?";
     $stmt = mysqli_prepare($link1, $query);
 
     if ($stmt) {
