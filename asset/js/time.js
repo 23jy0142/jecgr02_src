@@ -11,7 +11,7 @@ function Clock(){
     let nowtime = new Date();
     let days = ['日','月','火','水','木','金','土'];
     let nowYear = nowtime.getFullYear();
-    let nowMonth = nowtime.getMonth();
+    let nowMonth = nowtime.getMonth()+1;
     let nowDate = nowtime.getDate();
     let nowDay = nowtime.getDay();
     let nowHour = twoDigit(nowtime.getHours());

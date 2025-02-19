@@ -19,7 +19,7 @@ function callingStaff(selfregister_id) {
     .then((responseText) => {
       console.log("✅ スタッフ呼び出し成功:", responseText);
       alert("スタッフを呼び出しました");
-      window.location.href = "/src/view/self_register/callingStaff.php";
+      window.location.href = "../../view/self_register/callingStaff.php";
     })
     .catch((error) => {
       console.error("❌ スタッフ呼び出しエラー:", error);

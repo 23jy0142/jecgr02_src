@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: pause.php"); // ログイン成功時
         exit();
     } else {
-        $_SESSION['login_error'] = "パスワードが間違っています";
+        $_SESSION['error'] = "パスワードが間違っています";
         header("Location: pause_confirmation.php"); // ログイン失敗時
         exit();
     }
@@ -57,10 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h1 id = "center_msg">休止確認パスワード</h1>
         <form action="" method="post" class="passward_text">
             <input type="password" name="password" required />
-            <input type="submit" value="確定" class="btn" onclick="pauseRegister()"/>
+            <input type="submit" value="確定" class="btn" />
         </form>
-        <?php if (isset($_GET['error'])): ?>
-            <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+        <?php if (isset($_SESSION['error'])): ?>
+            <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
+            <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
     </div>
     <!-- フッター部分 -->
