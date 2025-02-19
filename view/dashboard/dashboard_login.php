@@ -5,14 +5,16 @@ session_start();
 
 // ログイン処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST['username'] ?? '';
+    $username = $_POST['employee_number'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    if (login($username, $password)) {
-        header("Location: dashboard.php");
+    if (login($username, $password) > 0) {
+        header("Location: register_dashboard.php");
         exit();
     } else {
-        $error_message = "ユーザー名またはパスワードが間違っています";
+        $_SESSION['error'] = "社員番号またはパスワードが間違っています";
+        header("Location: dashboard_login.php"); // ログイン失敗時
+        exit();
     }
 }
 ?>
@@ -62,8 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="password" name="password" required /><br>
                 <input type="submit" value="確定" class="btn" />
             </form>
-            <?php if (isset($_GET['error'])): ?>
-                <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+            <?php if (isset($_SESSION['error'])): ?>
+                <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
+                <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
             <div class="content">
             

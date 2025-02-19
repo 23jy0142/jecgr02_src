@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: index.php"); // ログイン成功時
         exit();
     } else {
-        $_SESSION['login_error'] = "パスワードが間違っています";
+        $_SESSION['error'] = "パスワードが間違っています";
         header("Location: restart_confirmation.php"); // ログイン失敗時
         exit();
     }
@@ -45,8 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="password" name="password" required />
         <input type="submit" value="確定" class="btn" />
     </form>
-    <?php if (isset($_GET['error'])): ?>
-        <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+    <?php if (isset($_SESSION['error'])): ?>
+        <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
+        <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
 </body>
