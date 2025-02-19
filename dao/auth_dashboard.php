@@ -15,7 +15,7 @@ function login($employee_number, $employee_password) {
         $hashedPassword = hash('sha256', $employee_password);
 
         // SQLクエリの準備
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM employee WHERE employee_number = :employee_number AND employee_password = :hashedPassword");
+        $stmt = $pdo->prepare("SELECT * FROM employee WHERE employee_number = :employee_number AND employee_password = :hashedPassword");
         $stmt->bindParam(':employee_number', $employee_number, PDO::PARAM_INT);
         $stmt->bindParam(':hashedPassword', $hashedPassword, PDO::PARAM_STR);
         $stmt->execute();

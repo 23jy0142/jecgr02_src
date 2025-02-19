@@ -90,5 +90,6 @@ try {
       </div>
     </div>
     <button onclick="location.href='index.php'">ホームに戻る</button>
+    <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>

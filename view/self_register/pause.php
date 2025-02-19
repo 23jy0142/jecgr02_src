@@ -52,5 +52,6 @@ update_selfregister_status($selfregister_id, "5"); // ステータスを 1 に�
         
       </div>
     </div> 
+    <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>

@@ -72,5 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </div>
 <script type="module" src="../../asset/js/pauseRegister.js"></script>
+<script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>

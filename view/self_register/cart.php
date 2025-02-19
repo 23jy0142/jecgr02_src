@@ -63,6 +63,9 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                 <tbody>
                     <!-- 非同期でデータが挿入される -->
                 </tbody>
+                <tfoot>
+                    <!-- JavaScript で動的に合計値を追加 -->
+                </tfoot>
             </table>
             </div>
         </div> 

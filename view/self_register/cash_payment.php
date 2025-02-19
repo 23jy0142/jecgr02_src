@@ -8,8 +8,10 @@ update_selfregister_status($selfregister_id, "2"); // ステータスを 2 に�
 
 // 合計金額を計算
 $total_amount = 0;
+$total_quantity = 0;
 foreach ($cart_items as $item) {
     $total_amount += $item['price'] * $item['quantity'];
+    $total_quantity += $item['quantity'];
 }
 ?>
 
@@ -36,6 +38,10 @@ foreach ($cart_items as $item) {
         button { font-size: 16px; padding: 10px 20px; margin-top: 10px; cursor: pointer; }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // PHP から selfregister_id を JavaScript に渡す
+        window.selfregister_id = <?= json_encode($selfregister_id) ?>;
+    </script>
 </head>
 <body onload="startClock()">
     <!-- ヘッダー部分 -->
@@ -49,6 +55,7 @@ foreach ($cart_items as $item) {
         <div class="left_box1">
             <div class="pay_box">
                 <div><h2 id="pay_text">合計金額:</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount ?> 円</span></div>
+                <div><h2 id="pay_text">合計点数:</h2> <span id="total-quantity" data-total="<?= $total_quantity ?>"><?= $total_quantity ?> 点</span></div>
                 <div><h2 id="pay_text">投入金額:</h2> <input type="number" id="input-amount" placeholder="投入金額" oninput="calculateChange()"></div>
                 <div><h2 id="enoughpay_text">おつり:</h2> <span id="change">0 円</span></div>
                 <div><h2 id="pay_text">不足金額:</h2> <span id="shortage"><?= $total_amount ?> 円</span></div>
@@ -68,11 +75,14 @@ foreach ($cart_items as $item) {
 <footer>
     <div class="container">
         <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
-        <button class="btn_red btn" onclick="">取引中止</buttonｃ>
+        <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
+        <button class="btn" onclick="location.href='payment.php'">戻る</button>
     </div>
     
     <script src="../../asset/js/callingStaff.js"></script>
+    <script src="../../asset/js/cancelTransaction.js"></script>
     <script src="../../asset/js/calculateChange.js"></script>
+    <script type="module" src="../../asset/js/time.js"></script>
 </footer>
 </body>
 </html>

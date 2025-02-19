@@ -5,10 +5,14 @@ session_start();
 
 // ログイン処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST['employee_number'] ?? '';
+    $employee_number = $_POST['employee_number'] ?? '';
     $password = $_POST['password'] ?? '';
+    $_SESSION['username'] = $_POST['employee_name'];
 
-    if (login($username, $password) > 0) {
+    
+
+    if (login($employee_number, $password) > 0) {
+
         header("Location: register_dashboard.php");
         exit();
     } else {
@@ -43,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     .btn { background-color: #9cf;}
 </style>
 
-<body>
+<body onload="startClock()">
     <!-- ヘッダー部分 -->
     <div class="header">
       <header class="header_left">
@@ -79,5 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
       </div>
     </div>
+    <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>

@@ -9,6 +9,8 @@ $(document).ready(function () {
         console.log("サーバーからのレスポンス:", response); // データの確認
         console.log(response.data);
         let requiresAgeVerification = "2"; // 年齢確認が必要か判定
+        let totalQuantity = 0;
+        let totalPrice = 0;
         if (response.success) {
           let tableContent = "";
 
@@ -19,9 +21,23 @@ $(document).ready(function () {
               tableContent += `<tr>
                                   <td>${item.item_id}</td>
                                   <td>${item.product_name}</td>
-                                  <td>${item.quantity}</td>
-                                  <td>${item.price} 円</td>
+                                  <td>${Math.floor(item.quantity)}点</td>
+                                  <td>${Math.floor(item.price)} 円</td>
                               </tr>`;
+              // 合計点数と合計金額を計算
+              totalQuantity += parseInt(item.quantity);
+              totalPrice += parseInt(item.price) * parseInt(item.quantity);
+              // `<tfoot>` に合計値を反映
+              $("#cart-items tfoot").html(`
+                <tr>
+                  <td colspan="2"><strong>合計</strong></td>
+                  <td><strong>${totalQuantity}</strong> 点</td>
+                  <td><strong>${Math.floor(totalPrice)} 円</strong></td>
+                </tr>
+              `);
+              $("#cart-items tbody").html(tableContent);
+              console.log("合計点数:", totalQuantity, "合計金額:", Math.floor(totalPrice));
+
 
               // もし age_verification が true なら年齢確認を行う
               console.log(item.age_verification);

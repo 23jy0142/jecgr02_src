@@ -4,7 +4,8 @@ require_once '../../dao/cart_functions.php';
 
 session_start();
 $selfregister_id = $_SESSION['selfregister_id'];
-update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に更新
+update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に変更
+
 ?>
 
 <!DOCTYPE html>
@@ -47,8 +48,10 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                     data: { selfregister_id: <?= $selfregister_id ?> },
                     dataType: "json",
                     success: function(response) {
+                        let totalQuantity = 0;
+                        let totalAmount = 0;
+                        let tableContent = "";
                         if (response.success) {
-                            let tableContent = '';
                             if (response.data.length > 0) {
                                 $.each(response.data, function(index, item) {
                                     tableContent += `<tr>
@@ -59,13 +62,19 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                                                             <span>${item.quantity}</span>
                                                             <button class="quantity-btn increase" data-item-id="${item.item_id}">+</button>
                                                         </td>
-                                                        <td>${item.price} 円</td>
+                                                        <td>${Math.floor(item.price)} 円</td>
                                                     </tr>`;
+                                    totalQuantity += parseInt(item.quantity);
+                                    totalAmount += parseInt(item.price * item.quantity);
                                 });
+
                             } else {
                                 tableContent = '<tr><td colspan="4">カートが空です</td></tr>';
                             }
-                            $('#cart-items tbody').html(tableContent);
+                            // ✅ HTML にデータを反映
+                            $("#cart-items tbody").html(tableContent);
+                            $('#total-quantity').text(totalQuantity + " 点");
+                            $('#total-amount').text(Math.floor(totalAmount) + " 円");
                         } else {
                             console.error('データ取得エラー:', response.message);
                         }
@@ -177,6 +186,13 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                     </tr>
                 </thead>
                 <tbody></tbody>
+                <tfoot>
+                    <tr>
+                       <td colspan="2"><strong>合計</strong></td>
+                       <td><strong id="total-quantity">0</strong></td>
+                       <td><strong id="total-amount">0</strong></td> 
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

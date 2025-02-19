@@ -49,6 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
-
+    <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>
