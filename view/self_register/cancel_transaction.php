@@ -8,6 +8,6 @@ if (!isset($_SESSION['selfregister_id'])) {
     die("エラー: レジIDが設定されていません");
 }
 $selfregister_id = $_SESSION['selfregister_id'];
-update_selfregister_status($selfregister_id, "4"); // ステータスを 1 に更新
+update_selfregister_status($selfregister_id, "6"); // ステータスを 6 に更新
 header("Location: index.php");
 ?>_

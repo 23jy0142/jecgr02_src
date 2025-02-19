@@ -4,7 +4,7 @@ require_once '../../dao/cart_functions.php';
 session_start();
 $selfregister_id = $_SESSION['selfregister_id'];
 $cart_items = get_cart_items($selfregister_id);
-update_selfregister_status($selfregister_id, "3"); // ステータスを 1 に更新
+update_selfregister_status($selfregister_id, "2"); // ステータスを 2 に更新
 
 // 合計金額を計算
 $total_amount = 0;
