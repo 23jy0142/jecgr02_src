@@ -25,18 +25,14 @@ $(document).ready(function () {
 
               // もし age_verification が true なら年齢確認を行う
               console.log(item.age_verification);
-              if (item.age_verification == "1") {
+              if (item.age_verification == "2") {
                 console.log(
                   "年齢確認が必要な商品がありました:",
                   item.product_name
                 );
                 requiresAgeVerification = true;
-              }else{
-                
-              } 
+              }
             });
-          } else {
-            tableContent = '<tr><td colspan="4">カートが空です</td></tr>';
           }
           $("#cart-items tbody").html(tableContent);
           console.log("requiresAgeVerification の値:", requiresAgeVerification);

@@ -1,5 +1,5 @@
-function callingStaff() {
-  if (!window.selfregister_id) {
+function callingStaff(selfregister_id) {
+  if (selfregister_id) {
     console.error("❌ selfregister_id が未定義です");
     alert("レジIDが取得できません");
     return;
@@ -7,11 +7,11 @@ function callingStaff() {
 
   console.log("📡 スタッフ呼び出し中...");
 
-  fetch("/src/dao/update_status.php", {
+  fetch("../../dao/update_status.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      selfregister_id: window.selfregister_id,
+      selfregister_id: selfregister_id,
       status: "3",
     }),
   })
@@ -19,7 +19,7 @@ function callingStaff() {
     .then((responseText) => {
       console.log("✅ スタッフ呼び出し成功:", responseText);
       alert("スタッフを呼び出しました");
-      window.location.href = "/src/view/self_register/callingStaff.php";
+      window.location.href = "../../view/self_register/callingStaff.php";
     })
     .catch((error) => {
       console.error("❌ スタッフ呼び出しエラー:", error);

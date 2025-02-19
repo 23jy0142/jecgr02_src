@@ -7,7 +7,8 @@ session_start();
 if (!isset($_SESSION['selfregister_id'])) {
   $_SESSION['selfregister_id'] = 101; // デフォルト値（本来はDBから取得すべき）
 }
-update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータスを 1 に更新
+$selfregister_id = $_SESSION['selfregister_id'];
+update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータスを 2 に更新
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -35,8 +36,12 @@ update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータ�
             background-repeat: no-repeat;
         } */
     </style>
+    <script>
+        window.selfregister_id = <?= json_encode($selfregister_id)?>;
+        console.log("selfregister_id:",window.selfregister_id);
+    </script>
 </head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <body onload="startClock()">
     <!-- ヘッダー部分 -->
     <div class="header">
@@ -66,8 +71,9 @@ update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータ�
             <button class="btn_gray btn" onclick="location.href='pause_confirmation.php'">休止</button> 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="../../config/cartConfig.js" defer></script>
-    <script type="module" src="../../asset/js/callingStaff.js"></script>
+    <script src="../../asset/js/callingStaff.js"></script>
     <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>
