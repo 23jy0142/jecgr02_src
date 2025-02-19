@@ -7,7 +7,7 @@ function callingStaff() {
 
   console.log("📡 スタッフ呼び出し中...");
 
-  fetch("/src/dao/update_status.php", {
+  fetch("../../dao/update_status.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({

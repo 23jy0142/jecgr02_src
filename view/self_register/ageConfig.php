@@ -4,48 +4,35 @@ require_once '../../dao/cart_functions.php';
 $selfregister_id = $_SESSION['selfregister_id'];
 update_selfregister_status($selfregister_id, "3"); // ステータスを 3 に更新
 $errorMessage = "";
-// ログイン処理
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $employee_number = $_POST['employee_number'] ?? "";
-  $password = $_POST['password'] ?? "";
-
-  if (authenticateUser($password)) {
-      try {
-          $pdo = db_connect();
-
-          // 年齢確認商品の `age_Verification` を更新
-          $stmt = $pdo->prepare("
-              UPDATE cart_items 
-              SET age_verification = false
-              WHERE selfregister_id = :selfregister_id
-          ");
-          $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_STR);
-          $stmt->execute();
-
-          // カートページへリダイレクト
-          header("Location: cart.php");
-          exit();
-      } catch (PDOException $e) {
-          $errorMessage = "エラー: " . $e->getMessage();
-      }
-  } else {
-      $errorMessage = "社員番号またはパスワードが間違っています。";
-  }
+// セッションから selfregister_id を取得
+if (!isset($_SESSION['selfregister_id'])) {
+  die("❌ セッションエラー: selfregister_id が設定されていません");
 }
 
-// 年齢確認が必要な商品の取得
-try {
-  $pdo = db_connect();
-  $stmt = $pdo->prepare("
-      SELECT item_id, product_name, quantity 
-      FROM cart_items 
-      WHERE selfregister_id = :selfregister_id AND age_verification = 2
-  ");
-  $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
-  $stmt->execute();
-  $ageRestrictedItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-  $errorMessage = "エラー: " . $e->getMessage();
+$selfregister_id = $_SESSION['selfregister_id'];
+$pdo = db_connect();
+
+// 年齢確認が必要かチェック
+$stmt = $pdo->prepare("SELECT age_verification FROM cart_items WHERE selfregister_id = :selfregister_id");
+$stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
+$stmt->execute();
+$age_verification = $stmt->fetchColumn();
+
+if ($age_verification === "2") {
+  // 年齢確認を完了したことをデータベースに更新
+  $update_stmt = $pdo->prepare("UPDATE cart_items SET age_verification = '1' WHERE selfregister_id = :selfregister_id");
+  $update_stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
+  if ($update_stmt->execute()) {
+      // ✅ 更新成功後に適切なページへリダイレクト
+      header("Location: cart.php");
+      exit();
+  } else {
+      die("❌ データベース更新エラー: 年齢確認ステータスの更新に失敗しました");
+  }
+} else {
+  // 既に年齢確認済みの場合はカートへリダイレクト
+  header("Location: cart.php");
+  exit();
 }
 
 ?>
