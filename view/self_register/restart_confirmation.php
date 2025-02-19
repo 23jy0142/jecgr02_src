@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'] ?? '';
 
     if (authenticateUser($password)) {
-        header("Location: index.php"); // ログイン成功時
+        header("Location: reopen.php"); // ログイン成功時
         exit();
     } else {
         $_SESSION['error'] = "パスワードが間違っています";

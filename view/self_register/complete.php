@@ -61,9 +61,9 @@ try {
     <link rel="stylesheet" href="../../asset/css/component/text.css" />
     <link rel="stylesheet" href="../../asset/css/style/all.css" />
     <script>
-        // setTimeout(function() {
-        //     window.location.href = "index.php";
-        // }, 5000);
+        setTimeout(function() {
+            window.location.href = "index.php";
+        }, 5000);
     </script>
 </head>
 <body onload="startClock()">
@@ -84,9 +84,7 @@ try {
           <h2 id="under_msg">お釣りの取り忘れにご注意ください</h2>
           <div class="change_pay">
               <h2>おつり</h2>
-              <p><strong>おつり: <?= $change ?> 円</strong></p>
-              <!-- CSSで余白と右寄せを使って作成してみて！ -->
-              <p><span class="change_text"></span>円</p>
+              <p><strong class="change_text">おつり: <?= $change ?> 円</strong></p>
           </div>
         </div>
       </div>

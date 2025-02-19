@@ -26,7 +26,10 @@ function updateRegisters() {
         } else if (register.selfregister_status == "4") {
           notificationText = "✅ お会計完了";
           notificationClass = "active";
-        } 
+        } else if (register.selfregister_status == "6") {
+          notificationText = "✅ 取引中止";
+          notificationClass = "active";
+        }
 
         // 休止中のレジは「休止中」画面を表示
         if (register.selfregister_status == "5") {

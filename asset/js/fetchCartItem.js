@@ -8,7 +8,7 @@ $(document).ready(function () {
       success: function (response) {
         console.log("サーバーからのレスポンス:", response); // データの確認
         console.log(response.data);
-        let requiresAgeVerification = false; // 年齢確認が必要か判定
+        let requiresAgeVerification = "2"; // 年齢確認が必要か判定
         if (response.success) {
           let tableContent = "";
 
@@ -30,7 +30,7 @@ $(document).ready(function () {
                   "年齢確認が必要な商品がありました:",
                   item.product_name
                 );
-                requiresAgeVerification = true;
+                requiresAgeVerification = "1";
               }
             });
           }
