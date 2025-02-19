@@ -38,7 +38,7 @@ try {
 
     // カート内の商品を削除
     delete_cart_items($selfregister_id);
-
+    update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータスを 2 に更新
 } catch (Exception $e) {
     die("❌ エラー: " . $e->getMessage());
 }

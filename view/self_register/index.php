@@ -8,7 +8,7 @@ if (!isset($_SESSION['selfregister_id'])) {
   $_SESSION['selfregister_id'] = 101; // デフォルト値（本来はDBから取得すべき）
 }
 $selfregister_id = $_SESSION['selfregister_id'];
-update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータスを 2 に更新
+// update_selfregister_status($_SESSION['selfregister_id'], "2"); // ステータスを 2 に更新
 ?>
 <!DOCTYPE html>
 <html lang="ja">

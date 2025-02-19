@@ -9,7 +9,7 @@ if (!isset($_SESSION['selfregister_id'])) {
 }
 $selfregister_id = $_SESSION['selfregister_id'];
 update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に更新
-?>
+?>_
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -70,7 +70,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     
 
     
-    <button class="btn_red btn" >取引中止</button>
+    <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
     <button class="btn_green"  onclick="goToPayment()" style="font-size: 16px;">お支払いへ</button>
     <button class="btn_gray btn"  onclick="callingStaff()" >スタッフ呼び出し</button>
     <a class="btn_yellow btn"  href="cart_edit_login.php">商品入力</a>
@@ -81,6 +81,6 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/goToPayment.js"></script>
     <script src="../../asset/js/time.js"></script>
-
+    <script src="../../asset/js/cancelTransaction.js"></script>
 </body>
 </html>

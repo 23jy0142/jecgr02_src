@@ -102,9 +102,17 @@ function getCartTotal($selfregister_id) {
 
 // カートアイテム削除
 function delete_cart_items($selfregister_id) {
-    school_db_connect($link);
-    $query = "DELETE FROM cart_items WHERE selfregister_id = '$selfregister_id'";
-    mysqli_query($link, $query);
-    mysqli_close($link);
+    $pdo = db_connect(); // ✅ データベース接続
+    $stmt = $pdo->prepare("DELETE FROM cart_items WHERE selfregister_id = :selfregister_id");
+    $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
+    
+    // デバッグ用
+    if (!$stmt->execute()) {
+        error_log("DEBUG: delete_cart_items() - SQL execution failed");
+        return false;
+    }
+
+    return true;
 }
+
 ?>
