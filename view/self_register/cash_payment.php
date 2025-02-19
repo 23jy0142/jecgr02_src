@@ -51,22 +51,22 @@ foreach ($cart_items as $item) {
             <span id="now"></span>
         </div>
     </div>
-    <div class="main">
-        <div class="left_box1">
+    <div class="rows">
+        <div class="left_box">
             <div class="pay_box">
                 <div><h2 id="pay_text">合計金額:</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount ?> 円</span></div>
                 <div><h2 id="pay_text">合計点数:</h2> <span id="total-quantity" data-total="<?= $total_quantity ?>"><?= $total_quantity ?> 点</span></div>
                 <div><h2 id="pay_text">投入金額:</h2> <input type="number" id="input-amount" placeholder="投入金額" oninput="calculateChange()"></div>
                 <div><h2 id="enoughpay_text">おつり:</h2> <span id="change">0 円</span></div>
                 <div><h2 id="pay_text">不足金額:</h2> <span id="shortage"><?= $total_amount ?> 円</span></div>
-                <button id="complete-payment" disabled>お支払い完了</button>
             </div>
         </div>
         <!-- 画面全体の右部分 -->
-        <div class="right_box1">
+        <div class="right_box">
             <div class="righttext_box">
                 <p id="payexp_text"><i class="fa-solid fa-arrow-left" style="color: #96be86;"></i> お金を投入してください</p>
             </div>
+            <div><button id="complete-payment" disabled>お支払い完了</button></div>
         </div>
     </div>
     
