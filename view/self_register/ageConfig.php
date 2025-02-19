@@ -1,19 +1,53 @@
 <?php
 require_once '../../dao/auth.php'; // 共通の認証ファイルを読み込む
-
-// ログインフォーム送信時の処理
+require_once '../../dao/cart_functions.php';
+$selfregister_id = $_SESSION['selfregister_id'];
+update_selfregister_status($selfregister_id, "3"); // ステータスを 3 に更新
+$errorMessage = "";
+// ログイン処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $password = $_POST['password'] ?? '';
+  $employee_number = $_POST['employee_number'] ?? "";
+  $password = $_POST['password'] ?? "";
 
-    if (authenticateUser($password)) {
-        header("Location: cart.php"); // ログイン成功時
-        exit();
-    } else {
-        $_SESSION['login_error'] = "パスワードが間違っています";
-        header("Location: ageConfig.php"); // ログイン失敗時
-        exit();
-    }
+  if (authenticateUser($password)) {
+      try {
+          $pdo = db_connect();
+
+          // 年齢確認商品の `age_Verification` を更新
+          $stmt = $pdo->prepare("
+              UPDATE cart_items 
+              SET age_verification = false
+              WHERE selfregister_id = :selfregister_id
+          ");
+          $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_STR);
+          $stmt->execute();
+
+          // カートページへリダイレクト
+          header("Location: cart.php");
+          exit();
+      } catch (PDOException $e) {
+          $errorMessage = "エラー: " . $e->getMessage();
+      }
+  } else {
+      $errorMessage = "社員番号またはパスワードが間違っています。";
+  }
 }
+
+// 年齢確認が必要な商品の取得
+try {
+  $pdo = db_connect();
+  $stmt = $pdo->prepare("
+      SELECT item_id, product_name, quantity 
+      FROM cart_items 
+      WHERE selfregister_id = :selfregister_id AND age_verification = 2
+  ");
+  $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
+  $stmt->execute();
+  $ageRestrictedItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  $errorMessage = "エラー: " . $e->getMessage();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -62,8 +96,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
             <?php endif; ?>
           </div>
-          <div class="content">
-          </div>
+        <div class="content">
+        <h1>年齢確認が必要な商品</h1>
+    <?php if (!empty($errorMessage)): ?>
+        <p style="color: red;"><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></p>
+    <?php endif; ?>
+
+    <table>
+        <thead>
+            <tr>
+                <th>商品ID</th>
+                <th>商品名</th>
+                <th>数量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($ageRestrictedItems as $item): ?>
+                <tr>
+                    <td><?= htmlspecialchars($item['item_id'], ENT_QUOTES, 'UTF-8') ?></td>
+                    <td><?= htmlspecialchars($item['product_name'], ENT_QUOTES, 'UTF-8') ?></td>
+                    <td><?= htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8') ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+      </div>
     </div>
     <!-- フッター部分 -->
     <div class="footer">
@@ -71,5 +128,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
       </div>
     </div>
+    <script src="../../asset/js/time.js"></script>
 </body>
 </html>

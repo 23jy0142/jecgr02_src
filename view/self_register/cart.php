@@ -80,6 +80,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     <script src="../../asset/js/fetchCartItem.js"></script>
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/goToPayment.js"></script>
+    <script src="../../asset/js/time.js"></script>
 
 </body>
 </html>

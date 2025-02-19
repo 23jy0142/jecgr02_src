@@ -153,7 +153,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="startClock()">
     <!-- ヘッダー部分 -->
     <div class="header">
       <header class="header_left">
@@ -176,5 +176,6 @@
     </script>
     <script src="../../asset/js/updateRegisters.js"></script>
     <script src="../../asset/js/clearNotification.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </body>
 </html>
