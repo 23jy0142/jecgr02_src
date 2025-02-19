@@ -1,5 +1,5 @@
-function callingStaff() {
-  if (!window.selfregister_id) {
+function callingStaff(selfregister_id) {
+  if (selfregister_id) {
     console.error("❌ selfregister_id が未定義です");
     alert("レジIDが取得できません");
     return;
@@ -11,7 +11,7 @@ function callingStaff() {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      selfregister_id: window.selfregister_id,
+      selfregister_id: selfregister_id,
       status: "3",
     }),
   })
