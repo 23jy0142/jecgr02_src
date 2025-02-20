@@ -1,6 +1,7 @@
 function calculateChange() {
   // 合計金額を取得
-  var totalAmount = parseInt(document.getElementById('total-amount').getAttribute('data-total')*1.1) || 0;
+  var totalAmount = parseInt(document.getElementById('total-amount').getAttribute('data-total')) || 0;
+  
   var inputAmount = parseInt(document.getElementById('input-amount').value) || 0;
   var change = inputAmount - totalAmount;
   document.getElementById("input-amount").addEventListener("keydown", function (event) {

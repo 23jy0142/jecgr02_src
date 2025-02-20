@@ -13,8 +13,8 @@ $total_quantity = 0;
 foreach ($cart_items as $item) {
     $total_amount += $item['price'] * $item['quantity'];
     $total_quantity += $item['quantity'];
-    $total_amount_tax += $total_amount * 1.1;
 }
+$total_amount_tax += $total_amount * 1.1;
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +57,7 @@ foreach ($cart_items as $item) {
         <div class="left_box">
             <div class="pay_box">
                 <div><h2 id="pay_text">税抜き額:</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount ?> 円</span></div>
-                <div><h2 id="pay_text">合計金額(税込):</h2> <span id="total-amount" data-total="<?= $total_amount_tax ?>"><?= $total_amount_tax?> 円</span></div>
+                <div><h2 id="pay_text">合計金額(税込):</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount_tax?> 円</span></div>
                 <div><h2 id="pay_text">合計点数:</h2> <span id="total-quantity" data-total="<?= $total_quantity ?>"><?= $total_quantity ?> 点</span></div>
                 <div><h2 id="pay_text">投入金額:</h2> <input type="number" min="0" step="1" id="input-amount" placeholder="投入金額" oninput="calculateChange()"></div>
                 <div><h2 id="enoughpay_text">おつり:</h2> <span id="change">0 円</span></div>
