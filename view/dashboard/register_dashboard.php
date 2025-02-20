@@ -163,7 +163,7 @@ session_start();
     <!-- ヘッダー部分 -->
     <div class="header">
       <header class="header_left">
-        <span>ログインユーザー名： <?php echo print($_SESSION['employee_name']);?></span>
+        <span>ログインユーザー名： <?php echo ($_SESSION['employee_name']);?></span>
       </header>
       <div class="header_right">
         <span id="now"></span>

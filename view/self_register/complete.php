@@ -63,7 +63,7 @@ try {
     <script>
         setTimeout(function() {
             window.location.href = "index.php";
-        }, 5000);
+        }, 15000);
     </script>
 </head>
 <body onload="startClock()">
@@ -88,8 +88,10 @@ try {
           </div>
         </div>
       </div>
+      <button onclick="createReceipt()">レシート発行</button>
     </div>
     <button onclick="location.href='index.php'">ホームに戻る</button>
     <script type="module" src="../../asset/js/time.js"></script>
+    <script type="module" src="../../asset/create_receipt.js"></script>
 </body>
 </html>
