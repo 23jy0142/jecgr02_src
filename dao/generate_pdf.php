@@ -1,11 +1,28 @@
 <?php
-require_once('asset/TCPDF-main/tcpdf.php'); // TCPDFライブラリを読み込む
+require_once('../asset/TCPDF-main/tcpdf.php'); // TCPDFライブラリを読み込む
+
+$pdo = db_connect();
+
+        // INSERT文を実行
+        $stmt = $pdo->prepare("
+            INSERT INTO sales_items (item_id,selfregister_id,quantity, payment_date)
+            VALUES(:item_id,:selfregister_id,:quantity,NOW())");
+
+            foreach ($INSERT_items as $item){
+              $stmt->execute([
+                  
+              ]);
+          }
+
+
+
+
 
 // TCPDFクラスを拡張してカスタムヘッダーとフッターを作成
 class CustomPDF extends TCPDF {
     // ヘッダー
     public function Header() {
-        $this->SetFont('helvetica', 'B', 12);
+        $this->SetFont('kozgopromedium', '', 12);
         $this->Cell(0, 10, 'PDFサンプル - ヘッダー', 0, 1, 'C');
         $this->Ln(5); // 余白
     }
@@ -13,7 +30,7 @@ class CustomPDF extends TCPDF {
     // フッター
     public function Footer() {
         $this->SetY(-15); // ページの下から15mmの位置
-        $this->SetFont('helvetica', 'I', 8);
+        $this->SetFont('kozgopromedium', '', 8);
         $this->Cell(0, 10, 'ページ ' . $this->getAliasNumPage() . ' / ' . $this->getAliasNbPages(), 0, 0, 'C');
     }
 }
@@ -26,7 +43,7 @@ $pdf->SetCreator('MyApp');
 $pdf->SetAuthor('あなたの名前');
 $pdf->SetTitle('サンプルPDF');
 $pdf->SetSubject('PHPでPDFを作成');
-$pdf->SetKeywords('TCPDF, PDF, PHP');
+$pdf->SetKeywords('TCPDF, PDF, PHP, 日本語');
 
 // マージン設定
 $pdf->SetMargins(15, 27, 15);
@@ -34,13 +51,13 @@ $pdf->SetHeaderMargin(10);
 $pdf->SetFooterMargin(10);
 $pdf->SetAutoPageBreak(TRUE, 25);
 
-// フォント設定
-$pdf->SetFont('helvetica', '', 12);
+// **日本語フォントを設定**
+$pdf->SetFont('kozgopromedium', '', 12); // 日本語フォントを指定
 
 // ページを追加
 $pdf->AddPage();
 
-// コンテンツ追加
+// **コンテンツ追加（日本語対応）**
 $content = "これはPHPで生成されたPDFのサンプルです。\n\n";
 $content .= "TCPDFライブラリを使用すると、テキストや画像、表、QRコードなどを簡単に追加できます。\n\n";
 $content .= "UTF-8に対応しているので、日本語も正しく表示されます。\n\n";
@@ -48,5 +65,5 @@ $content .= "フッターにはページ番号が自動で表示されます。"
 
 $pdf->MultiCell(0, 10, $content, 0, 'L', false, 1);
 
-// 出力（ブラウザで表示）
+// **PDFを出力（ブラウザで表示）**
 $pdf->Output('sample.pdf', 'I');
