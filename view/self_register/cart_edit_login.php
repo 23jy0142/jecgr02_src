@@ -1,6 +1,7 @@
 <?php
 require_once '../../dao/auth.php'; // 共通の認証ファイルを読み込む
-
+require_once '../../dao/cart_functions.php';
+update_selfregister_status($_SESSION['selfregister_id'], "3"); // ステータスを 3 に更新
 // ログインフォーム送信時の処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'] ?? '';
