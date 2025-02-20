@@ -93,7 +93,9 @@ try {
       <button onclick="createReceipt()">レシート発行</button>
     </div>
     <div class="footer">
-        <button onclick="location.href='index.php'">ホームに戻る</button>
+        <div class="btn_box">
+            <button onclick="location.href='index.php'">ホームに戻る</button>
+        </div>
     </div>
     <script type="module" src="../../asset/js/time.js"></script>
     <script type="module" src="../../asset/create_receipt.js"></script>

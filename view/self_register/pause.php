@@ -20,16 +20,15 @@ update_selfregister_status($selfregister_id, "5"); // ステータスを 1 に�
     <link rel="stylesheet" href="../../asset/css/component/button.css" />
     <link rel="stylesheet" href="../../asset/css/component/table.css">
     <link rel="stylesheet" href="../../asset/css/component/text.css" />
-    <link rel="stylesheet" href="../../asset/css/style/all.css" />
     <title>休止中</title>
 </head>
 <style>
-    /* body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #ccc; }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #ccc; }
     h1 { color: #256aff; }
-    button { background-color: #9cf;} */
+    button { background-color: #9cf;}
 </style>
 
-<body onload="startClock()">
+<body class="pouse" onload="startClock()">
     <!-- ヘッダー部分 -->
     <div class="header">
         <header class="header_left">
@@ -41,7 +40,7 @@ update_selfregister_status($selfregister_id, "5"); // ステータスを 1 に�
       </div>
     <!-- メイン部分 -->
     <div class="main">
-        <h1 id = "center_msg">休止中...</h1>
+        <h1>休止中...</h1>
         <div class="saikai_box">
             <button class="btn btn_saikai" onclick="location.href='restart_confirmation.php'">再開</button>
         </div>

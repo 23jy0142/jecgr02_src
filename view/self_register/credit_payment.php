@@ -21,7 +21,7 @@ $total_amount_tax += $total_amount * 1.1;
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>現金支払い</title>
+    <title>クレジット支払い</title>
     <link rel="stylesheet" href="../../asset/css/style/header.css" />
     <link rel="stylesheet" href="../../asset/css/style/main.css" />
     <link rel="stylesheet" href="../../asset/css/style/footer.css" />
@@ -73,9 +73,11 @@ $total_amount_tax += $total_amount * 1.1;
 
 <footer>
     <div class="footer">
-        <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
-        <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
-        <button class="btn" onclick="location.href='payment.php'">戻る</button>
+        <div class="btn_box">
+            <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
+            <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
+            <button class="btn" onclick="location.href='payment.php'">戻る</button>
+        </div>
     </div>
     
     <script src="../../asset/js/callingStaff.js"></script>
