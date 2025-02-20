@@ -3,6 +3,11 @@ function calculateChange() {
   var totalAmount = parseInt(document.getElementById('total-amount').getAttribute('data-total')) || 0;
   var inputAmount = parseInt(document.getElementById('input-amount').value) || 0;
   var change = inputAmount - totalAmount;
+  document.getElementById("input-amount").addEventListener("keydown", function (event) {
+    if (!/^[0-9]$/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
+        event.preventDefault();
+    }
+  });
 
   // おつりと不足金額を更新
   document.getElementById('change').innerText = (change >= 0 ? change : 0) + ' 円';

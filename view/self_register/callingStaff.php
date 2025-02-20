@@ -53,6 +53,7 @@ update_selfregister_status($selfregister_id, "3"); // ステータスを 1 に�
           <button class="btn btn_blue" onclick="history.back()">承認</button>
         </div>
     </div>
+    <div class="footer"></div>
     <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>
