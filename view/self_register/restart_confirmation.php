@@ -40,6 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </style>
 
 <body onload="startClock()">
+<div class="header">
+      <header class="header_left">
+        
+      </header>
+      <div class="header_right">
+        <span id="now"></span>
+      </div>
+    </div>
     <h1>再開確認パスワード</h1>
     <form action="" method="post" class="passward_text">
         <input type="password" name="password" required />
@@ -49,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
+    <div class="footer"></div>
     <script type="module" src="../../asset/js/time.js"></script>
 </body>
 </html>

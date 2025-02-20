@@ -46,7 +46,7 @@ $selfregister_id = $_SESSION['selfregister_id'];
         </div>
     </div>
     <footer>
-    <div class="container">
+    <div class="footer">
         <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
         <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
         <button class="btn" onclick="location.href='cart.php'">戻る</button>
