@@ -9,7 +9,7 @@ if (!isset($_SESSION['selfregister_id'])) {
 }
 $selfregister_id = $_SESSION['selfregister_id'];
 update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に更新
-?>_
+?>
 
 <!DOCTYPE html>
 <html lang="ja">

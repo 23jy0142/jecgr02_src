@@ -52,25 +52,25 @@ $(document).ready(function () {
           }
           $("#cart-items tbody").html(tableContent);
           console.log("requiresAgeVerification の値:", requiresAgeVerification);
-
+          window.requiresAgeVerification = requiresAgeVerification; // これを追加
           // 年齢確認が必要な商品が含まれていたら ageConfig.php に遷移
-          if (requiresAgeVerification == "1") {
-            console.log("年齢確認が必要なため、ステータスを更新して遷移");
+          // if (requiresAgeVerification == "1") {
+          //   console.log("年齢確認が必要なため、ステータスを更新して遷移");
 
-            $.ajax({
-              url: "../../dao/update_status.php",
-              type: "POST",
-              data: { selfregister_id: window.selfregister_id, status: "3" }, // ステータスを「3」に更新
-              success: function () {
-                console.log("ステータス更新成功");
-                console.log("画面遷移を実行: ageConfig.php");
-                window.location.href = "../../view/self_register/ageConfig.php"; // 年齢確認画面へ遷移
-              },
-              error: function (xhr, status, error) {
-                console.error("ステータス更新エラー:", status, error);
-              },
-            });
-          }
+          //   $.ajax({
+          //     url: "../../dao/update_status.php",
+          //     type: "POST",
+          //     data: { selfregister_id: window.selfregister_id, status: "3" }, // ステータスを「3」に更新
+          //     success: function () {
+          //       console.log("ステータス更新成功");
+          //       console.log("画面遷移を実行: ageConfig.php");
+          //       window.location.href = "../../view/self_register/ageConfig.php"; // 年齢確認画面へ遷移
+          //     },
+          //     error: function (xhr, status, error) {
+          //       console.error("ステータス更新エラー:", status, error);
+          //     },
+          //   });
+          // }
         } else {
           console.error("データ取得エラー:", response.message);
         }
