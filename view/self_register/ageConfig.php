@@ -63,10 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM employee WHERE employee_password = :hashedPassword");
     $stmt->bindParam(':hashedPassword', $hashedPassword, PDO::PARAM_STR);
     $stmt->execute();
-    $count = $stmt->columnCount();
-    print($count);
+    $count = (int)$stmt->fetchColumn();
+    print($count);//テストコード
     if ($count > 0) {
         print("テスト1");
+        print($count);//テストコード
         // ✅ `age_verification` を更新し、cart.php へ遷移
         $updateStmt = $pdo->prepare("UPDATE cart_items SET age_verification = '1' WHERE selfregister_id = :selfregister_id");
         $updateStmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
@@ -75,9 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     //     header("Location: cart.php");
     //     exit();
-    // } else {
-    //     header("Location: ageConfig.php?error=パスワードが間違っています");
-    //     exit();
+    } else {
+        $_SESSION['error'] = "パスワードが間違っています";
+        header("Location: ageConfig.php");
+        exit();
     }
 }
 // if ($age_verification === "2") {
@@ -161,8 +163,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="password" name="password"  required placeholder="パスワードを入力して下さい"/>
                 <input type="submit" value="確定" class="btn" />
             </form>
-            <?php if (isset($_GET['error'])): ?>
-                <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+            <?php if (isset($_SESSION['error'])): ?>
+                <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
+            <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
           </div>
         <div class="content">

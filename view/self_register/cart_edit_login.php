@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="passward_text">
                     <!-- エラーメッセージの表示 -->
                     <?php if (!empty($_SESSION['login_error'])): ?>
-                        <p class="error-message"><?= htmlspecialchars($_SESSION['login_error']) ?></p>
+                        <p class="error-message" style="color:#e52a17;"><?= htmlspecialchars($_SESSION['login_error']) ?></p>
                         <?php unset($_SESSION['login_error']); ?>
                     <?php endif; ?>
                     <form method="post">
