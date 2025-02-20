@@ -42,7 +42,7 @@ $selfregister_id = $_SESSION['selfregister_id'];
         <h1 id="center_msg">お支払方法の選択</h1>
         <div class="rows">
             <button class="btn_green2 btn" onclick="location.href='cash_payment.php?method=cash'">現金</button>
-            <button class="btn_gray2 btn" onclick="location.href='cash_payment.php?method=credit'">クレジット</button>
+            <button class="btn_gray2 btn" onclick="location.href='credit_payment.php?method=credit'">クレジット</button>
         </div>
     </div>
     <footer>
