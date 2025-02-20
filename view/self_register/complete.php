@@ -20,14 +20,16 @@ try {
 
     // 合計金額を計算
     $total_amount = 0;
+    $total_amount_tax = 0;
     foreach ($cart_items as $item) {
         $total_amount += $item['price'] * $item['quantity'];
+        $total_amount_tax = $total_amount * 1.1;
     }
 
     // 支払い方法の取得
     $method = $_GET['method'] ?? '不明';
     $input_amount = $_GET['input_amount'] ?? 0;
-    $change = max($input_amount - $total_amount, 0);
+    $change = max($input_amount - $total_amount_tax, 0);
 
     // 支払い情報を sales_items テーブルに記録
     $result = record_payment($selfregister_id, $total_amount, $method);
@@ -84,7 +86,7 @@ try {
           <h2 id="under_msg">お釣りの取り忘れにご注意ください</h2>
           <div class="change_pay">
               <h2>おつり</h2>
-              <p><strong class="change_text">おつり: <?= $change ?> 円</strong></p>
+              <p><strong class="change_text">おつり: <?= $change?> 円</strong></p>
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ $(document).ready(function () {
                 </tr>
               `);
               $("#cart-items tbody").html(tableContent);
-              console.log("合計点数:", totalQuantity, "合計金額:", Math.floor(totalPrice));
+              console.log("合計点数:", totalQuantity, "合計金額(税抜き):", Math.floor(totalPrice));
 
 
               // もし age_verification が true なら年齢確認を行う
