@@ -68,11 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($count > 0) {
         print("テスト1");
         print($count);//テストコード
-        // ✅ `age_verification` を更新し、cart.php へ遷移
+        // ✅ `age_verification` を更新し、payment.php へ遷移
         $updateStmt = $pdo->prepare("UPDATE cart_items SET age_verification = '1' WHERE selfregister_id = :selfregister_id");
         $updateStmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
         $updateStmt->execute();
-        header("Location: cart.php");
+        header("Location: payment.php");
 
     //     header("Location: cart.php");
     //     exit();
