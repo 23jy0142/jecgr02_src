@@ -127,7 +127,12 @@ try {
           </div>
         </div>
       </div>
-      <button onclick="createReceipt()">レシート発行</button>
+      <a href="sample_pdf.php?inputAmount=<?=$_GET['input_amount'] ?>&trading_information_id=<?= $trading_information_id ?>" target="_blank">
+        レシート発行
+      </a>
+      <a href="index.php">aaaa</a>
+
+
     </div>
     <div class="footer">
         <div class="btn_box">
@@ -135,6 +140,6 @@ try {
         </div>
     </div>
     <script type="module" src="../../asset/js/time.js"></script>
-    <script type="module" src="../../asset/create_receipt.js"></script>
+    <script type="module" src="../../asset/js/create_receipt.js"></script>
 </body>
 </html>

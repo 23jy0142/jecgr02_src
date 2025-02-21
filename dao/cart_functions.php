@@ -79,6 +79,7 @@ function get_trading_id($selfregister_id){
     $row = mysqli_fetch_row($result);
     $maxId = $row[0];
     mysqli_close($link);
+    $_SESSION['trading_id'] = $maxId;
     return $maxId;
 }
 /**
