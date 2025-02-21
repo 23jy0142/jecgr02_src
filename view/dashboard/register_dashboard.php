@@ -2,7 +2,6 @@
 require_once '../../dao/db_connect.php';
 require_once '../../dao/cart_functions.php';
 session_start();
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">

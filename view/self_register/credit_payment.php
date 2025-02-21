@@ -21,7 +21,7 @@ $total_amount_tax += $total_amount * 1.1;
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>現金支払い</title>
+    <title>クレジット支払い</title>
     <link rel="stylesheet" href="../../asset/css/style/header.css" />
     <link rel="stylesheet" href="../../asset/css/style/main.css" />
     <link rel="stylesheet" href="../../asset/css/style/footer.css" />
@@ -56,20 +56,16 @@ $total_amount_tax += $total_amount * 1.1;
     <div class="rows">
         <div class="left_box">
             <div class="pay_box">
-                <div><h2 id="pay_text">税抜き額:</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount ?> 円</span></div>
-                <div><h2 id="pay_text">合計金額(税込):</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount_tax?> 円</span></div>
+                <div><h2 id="pay_text">合計金額:</h2> <span id="total-amount" data-total="<?= $total_amount ?>"><?= $total_amount_tax?> 円</span></div>
                 <div><h2 id="pay_text">合計点数:</h2> <span id="total-quantity" data-total="<?= $total_quantity ?>"><?= $total_quantity ?> 点</span></div>
-                <div><h2 id="pay_text">投入金額:</h2> <input type="number" min="0" step="1" id="input-amount" placeholder="投入金額" oninput="calculateChange()"></div>
-                <div><h2 id="enoughpay_text">おつり:</h2> <span id="change">0 円</span></div>
-                <div><h2 id="pay_text">不足金額:</h2> <span id="shortage"><?= $total_amount_tax ?> 円</span></div>
             </div>
         </div>
         <!-- 画面全体の右部分 -->
         <div class="right_box">
             <div class="righttext_box">
-                <p id="payexp_text"><i class="fa-solid fa-arrow-left" style="color: #96be86;"></i> お金を投入してください</p>
+                <p id="payexp_text">カードをタッチまたは挿入してください<i class="fa-solid fa-arrow-right" style="color: #96be86;"></i></p>
             </div>
-            <div><button id="complete-payment" disabled>お支払い完了</button></div>
+            <div><button id="complete-payment" disabled></button></div>
         </div>
     </div>
     
@@ -83,6 +79,7 @@ $total_amount_tax += $total_amount * 1.1;
             <button class="btn" onclick="location.href='payment.php'">戻る</button>
         </div>
     </div>
+    
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/cancelTransaction.js"></script>
     <script src="../../asset/js/calculateChange.js"></script>

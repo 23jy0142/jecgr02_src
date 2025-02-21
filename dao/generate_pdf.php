@@ -1,20 +1,26 @@
 <?php
 require_once('../asset/TCPDF-main/tcpdf.php'); // TCPDFライブラリを読み込む
 
-$pdo = db_connect();
+// $pdo = db_connect();
 
         // INSERT文を実行
+<<<<<<< HEAD
         $stmt = $pdo->prepare("SELECT branchoffice_name, phone_number AS TEL, sales_id, payment_date, product_name, mi.item_price, quantity, mi.item_price*quantity AS '点数金額'
                                       FROM master_item AS mi
                                       INNER JOIN  sales_items AS si ON mi.item_id = si.item_id
                                       INNER JOIN  branch_office AS bo ON mi.branchoffice_id = bo.branchoffice_id
                                       WHERE payment_date = '2025-02-18 21:34:07'");
+=======
+        // $stmt = $pdo->prepare("
+        //     INSERT INTO sales_items (item_id,selfregister_id,quantity, payment_date)
+        //     VALUES(:item_id,:selfregister_id,:quantity,NOW())");
+>>>>>>> e76c4f2610e10e0decc357392982c49f2a5385ec
 
-            foreach ($INSERT_items as $item){
-              $stmt->execute([
+        //     foreach ($INSERT_items as $item){
+        //       $stmt->execute([
                   
-              ]);
-          }
+        //       ]);
+        //   }
 
 
 
@@ -25,7 +31,7 @@ class CustomPDF extends TCPDF {
     // ヘッダー
     public function Header() {
         $this->SetFont('kozgopromedium', '', 12);
-        $this->Cell(0, 10, 'PDFサンプル - ヘッダー', 0, 1, 'C');
+        $this->Cell(0, 10, 'がセ商店　レシート', 0, 1, 'C');
         $this->Ln(5); // 余白
     }
 
@@ -43,8 +49,8 @@ $pdf = new CustomPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF
 // ドキュメント情報を設定
 $pdf->SetCreator('MyApp');
 $pdf->SetAuthor('あなたの名前');
-$pdf->SetTitle('サンプルPDF');
-$pdf->SetSubject('PHPでPDFを作成');
+$pdf->SetTitle('がセ商店　レシート');
+$pdf->SetSubject('');
 $pdf->SetKeywords('TCPDF, PDF, PHP, 日本語');
 
 // マージン設定
@@ -69,3 +75,6 @@ $pdf->MultiCell(0, 10, $content, 0, 'L', false, 1);
 
 // **PDFを出力（ブラウザで表示）**
 $pdf->Output('sample.pdf', 'I');
+
+
+?>

@@ -182,7 +182,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                         <th>JANコード</th>
                         <th>商品名</th>
                         <th>個数</th>
-                        <th>金額</th>
+                        <th>金額(税抜き)</th>
                     </tr>
                 </thead>
                 <tbody></tbody>

@@ -57,7 +57,7 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
                         <th>JANコード</th>
                         <th>商品名</th>
                         <th>個数</th>
-                        <th>金額</th>
+                        <th>金額(税抜き)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,10 +73,12 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     
 
     <div class="footer">
-        <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
-        <button class="btn_green"  onclick="goToPayment()" style="font-size: 16px;">お支払いへ</button>
-        <button class="btn_gray btn"  onclick="callingStaff()" >スタッフ呼び出し</button>
-        <a class="btn_yellow btn"  href="cart_edit_login.php">商品入力</a>
+        <div class="btn_box">
+            <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
+            <button class="btn_green"  onclick="goToPayment()" style="font-size: 16px;">お支払いへ</button>
+            <button class="btn_gray btn"  onclick="callingStaff()" >スタッフ呼び出し</button>
+            <a class="btn_yellow btn"  href="cart_edit_login.php">商品入力</a>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

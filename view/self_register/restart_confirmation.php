@@ -33,10 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="../../asset/css/style/all.css" />
     <title>再開確認パスワード</title>
 </head>
-<style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 20px;}
-    h1 { color: #69be86; }
-    .btn { background-color: #9cf;}
 </style>
 
 <body onload="startClock()">
@@ -48,16 +44,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <span id="now"></span>
       </div>
     </div>
-    <h1>再開確認パスワード</h1>
-    <form action="" method="post" class="passward_text">
-        <input type="password" name="password" required />
-        <input type="submit" value="確定" class="btn" />
-    </form>
-    <?php if (isset($_SESSION['error'])): ?>
-        <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
-    <div class="footer"></div>
-    <script type="module" src="../../asset/js/time.js"></script>
+    <div class="main">
+        <div class="container">
+            <h1 id = "center_msg">再開確認パスワード</h1>
+            <form action="" method="post" class="passward_text">
+                <input type="password" name="password" required />
+                <input type="submit" value="確定" class="btn" />
+            </form>
+            <?php if (isset($_SESSION['error'])): ?>
+                <p class="error" style="color:#e52a17;"><?php echo htmlspecialchars($_SESSION['error']); ?></p>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
+            <div class="footer"></div>
+            <script type="module" src="../../asset/js/time.js"></script>
+        </div>
+    </div>
 </body>
 </html>

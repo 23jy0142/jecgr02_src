@@ -42,14 +42,16 @@ $selfregister_id = $_SESSION['selfregister_id'];
         <h1 id="center_msg">お支払方法の選択</h1>
         <div class="rows">
             <button class="btn_green2 btn" onclick="location.href='cash_payment.php?method=cash'">現金</button>
-            <button class="btn_gray2 btn" onclick="location.href='cash_payment.php?method=credit'">クレジット</button>
+            <button class="btn_gray2 btn" onclick="location.href='credit_payment.php?method=credit'">クレジット</button>
         </div>
     </div>
     <footer>
     <div class="footer">
-        <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
-        <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
-        <button class="btn" onclick="location.href='cart.php'">戻る</button>
+        <div class="btn_box">
+            <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
+            <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
+            <button class="btn" onclick="location.href='cart.php'">戻る</button>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../asset/js/callingStaff.js"></script>
