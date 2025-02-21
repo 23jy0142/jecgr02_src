@@ -2,7 +2,6 @@
 require_once('asset/TCPDF-main/tcpdf.php'); // TCPDFライブラリを読み込む
 
 // 変数定義（ダミーデータ）
-$branchoffice_name = "がせ商店";
 $phone_number = "000-0000-000";
 $trading_time = "2025年2月20日 木曜日 20:56";
 $items = [
@@ -22,9 +21,10 @@ foreach ($items as $item) {
 $tax = round($subtotal * 0.1); // 消費税10%
 $total_amount = $subtotal + $tax; // 合計金額
 $change = $inputAmount - $total_amount; // お釣り
+$length = 7*count($items);
 
 // TCPDFオブジェクトを作成
-$pdf = new TCPDF("P", "mm", array(80, 200), true, "UTF-8", false);
+$pdf = new TCPDF("P", "mm", array(80, (100+$length)), true, "UTF-8", false);
 $pdf->SetMargins(5, 5, 5);
 $pdf->SetAutoPageBreak(true, 5);
 $pdf->AddPage();
@@ -33,23 +33,27 @@ $pdf->AddPage();
 $pdf->SetFont("kozgopromedium", "", 12);
 
 // ヘッダー（店名・電話番号・日付）
-$pdf->Cell(0, 8, $branchoffice_name, 0, 1, "C");
+$pdf->Image("asset\image\gase2.jpg", 20, 6, 40);
+$pdf->Ln(14);
 $pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(0, 5, "TEL: " . $phone_number, 0, 1, "C");
 $pdf->Cell(0, 5, $trading_time, 0, 1, "C");
-$pdf->Ln(5); // 余白
+// $pdf->Ln(1); // 余白
 
 // タイトル
 $pdf->SetFont("kozgopromedium", "B", 14);
-$pdf->Cell(0, 8, "領収書", 0, 1, "C");
-$pdf->Ln(5);
+$pdf->Cell(0, 8, "＊～*～*～＊ 領収書 ＊～*～*～＊", 0, 1, "C");
+$pdf->Ln(1);
 
 // 商品リスト
 $pdf->SetFont("kozgopromedium", "", 10);
 foreach ($items as $item) {
-    $pdf->Cell(50, 6, $item["name"], 0, 0);
-    $pdf->Cell(20, 6, $item["quantity"] . "個", 0, 0, "R");
+    $pdf->Cell(20, 6, $item["name"], 0, 0);
+    $pdf->Cell(30, 6, $item["quantity"] . "個", 0, 0, "R");
     $pdf->Cell(20, 6, number_format($item["quantity"] * $item["price"]) . "円", 0, 1, "R");
+    if($item["quantity"] > 1){
+        $pdf->Cell(50, 6, "単" . $item["price"] . "円", 0, 1);
+    }
 }
 $pdf->Ln(5);
 
