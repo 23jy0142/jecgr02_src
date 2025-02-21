@@ -4,17 +4,11 @@ require_once('../asset/TCPDF-main/tcpdf.php'); // TCPDFライブラリを読み�
 // $pdo = db_connect();
 
         // INSERT文を実行
-<<<<<<< HEAD
         $stmt = $pdo->prepare("SELECT branchoffice_name, phone_number AS TEL, sales_id, payment_date, product_name, mi.item_price, quantity, mi.item_price*quantity AS '点数金額'
                                       FROM master_item AS mi
                                       INNER JOIN  sales_items AS si ON mi.item_id = si.item_id
                                       INNER JOIN  branch_office AS bo ON mi.branchoffice_id = bo.branchoffice_id
                                       WHERE payment_date = '2025-02-18 21:34:07'");
-=======
-        // $stmt = $pdo->prepare("
-        //     INSERT INTO sales_items (item_id,selfregister_id,quantity, payment_date)
-        //     VALUES(:item_id,:selfregister_id,:quantity,NOW())");
->>>>>>> e76c4f2610e10e0decc357392982c49f2a5385ec
 
         //     foreach ($INSERT_items as $item){
         //       $stmt->execute([
