@@ -31,13 +31,50 @@ try {
     $input_amount = $_GET['input_amount'] ?? 0;
     $change = max($input_amount - $total_amount_tax, 0);
 
-    // 支払い情報を sales_items テーブルに記録
-    $result = record_payment($selfregister_id, $total_amount, $method);
+    // 支払情報を　trading_information テーブルに取得
+    $pdo = db_connect();
+    // ブランチオフィス内にデータを挿入
+    $insert_office = get_branch_office($selfregister_id);
+    $stmt = $pdo->prepare("INSERT INTO trading_information(selfregister_id,branchoffice_id,trading_time)
+                           VALUES(:selfregister_id,'A001',NOW())");
+    $stmt->bindParam(':selfregister_id',$selfregister_id,PDO::PARAM_STR);
+    $stmt->execute();
 
-    if (!$result) {
-        die("❌ 支払処理に失敗しました");
+    // trading_informationからtrading_idのMAX値を取得
+    // 支払い情報を sales_items テーブルに記録
+    $trading_information_id=get_trading_id($selfregister_id);
+    $insert_items = get_cart_items($selfregister_id);
+    $stmt = $pdo->prepare("INSERT INTO sales_items(trading_information_id,item_id,selfregister_id,quantity,payment_date)
+                           VALUES(:trading_information_id,:item_id,:selfregister_id,:quantity,NOW())");
+    foreach ($insert_items as $item){
+        $stmt->execute([
+            ':trading_information_id'=> $trading_information_id,
+            ':item_id'=> $item['item_id'],
+            ':selfregister_id' => $selfregister_id,
+            ':quantity'=> $item['quantity']
+        ]);
     }
 
+    /**
+    * カートにアイテムを追加する
+    **/
+    // サンプルコード
+    // function addCartItem($selfregister_id, $item_id, $quantity) {
+    //     $pdo = db_connect();
+        // $stmt = $pdo->prepare("INSERT INTO cart_items (selfregister_id, item_id, quantity) VALUES (:selfregister_id, :item_id, :quantity)
+        //     ON DUPLICATE KEY UPDATE quantity = quantity + :quantity");
+    //     $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
+    //     $stmt->bindParam(':item_id', $item_id, PDO::PARAM_STR);
+    //     $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+    //     return $stmt->execute();
+    // }
+
+    
+    // foreach ($insert_office as $branch_office){
+    //     $stmt->execute([
+    //         ':selfregister_id' => $selfregister_id,
+    //     ]);
+    // }
     // カート内の商品を削除
     delete_cart_items($selfregister_id);
     update_selfregister_status($_SESSION['selfregister_id'], "4"); // ステータスを 2 に更新

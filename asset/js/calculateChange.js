@@ -1,8 +1,8 @@
 function calculateChange() {
   // 合計金額を取得
-  var totalAmount = parseInt(document.getElementById('total-amount').getAttribute('data-total')) || 0;
+  var totalAmount = Math.round(parseInt(document.getElementById('total-amount').getAttribute('data-total')) || 0);
 
-  var inputAmount = parseInt(document.getElementById('input-amount').value) || 0;
+  var inputAmount = Math.round(parseInt(document.getElementById('input-amount').value) || 0);
   var change = Math.round(inputAmount - totalAmount*1.1);
   document.getElementById("input-amount").addEventListener("keydown", function (event) {
     if (!/^[0-9]$/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
