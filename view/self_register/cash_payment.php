@@ -87,7 +87,7 @@ $total_amount_tax += $total_amount * 1.1;
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/cancelTransaction.js"></script>
     <script src="../../asset/js/calculateChange.js"></script>
-    <script type="module" src="../../asset/js/time.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </footer>
 </body>
 </html>

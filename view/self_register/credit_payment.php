@@ -63,9 +63,10 @@ $total_amount_tax += $total_amount * 1.1;
         <!-- 画面全体の右部分 -->
         <div class="right_box">
             <div class="righttext_box">
-                <p id="payexp_text">カードをタッチまたは挿入してください<i class="fa-solid fa-arrow-right" style="color: #96be86;"></i></p>
+                <p id="payexp_text">カードを挿入<i class="fa-solid fa-arrow-right" style="color: #96be86;"></i></p>
+                <p id="payexp_text">してください</p>
             </div>
-            <div><button id="complete-payment" disabled></button></div>
+            <div><button class="btn" onclick="location.href='credit_complete.php'">「疑似操作」カードを挿入</button></div>
         </div>
     </div>
     
@@ -82,8 +83,7 @@ $total_amount_tax += $total_amount * 1.1;
     
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/cancelTransaction.js"></script>
-    <script src="../../asset/js/calculateChange.js"></script>
-    <script type="module" src="../../asset/js/time.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </footer>
 </body>
 </html>

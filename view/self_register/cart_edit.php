@@ -198,5 +198,6 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     </div>
     <div class="footer"><button onclick="goToCart()">カートに戻る</button></div>
     <script src="../../asset/js/goToCart.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </body>
 </html>

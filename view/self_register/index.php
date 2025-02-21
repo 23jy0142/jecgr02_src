@@ -53,6 +53,9 @@ $selfregister_id = $_SESSION['selfregister_id'];
       </div>
     </div>
     <div class="main">
+        <div >
+                <button lass="invisible_btn" onclick="location.href='../dashboard/dashboard_login.php'"></button>
+        </div>
         <div class="container">
         <h1 id="center_msg">いらっしゃいませ</h1>
         </div>
@@ -74,6 +77,6 @@ $selfregister_id = $_SESSION['selfregister_id'];
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="../../config/cartConfig.js" defer></script>
     <script src="../../asset/js/callingStaff.js"></script>
-    <script type="module" src="../../asset/js/time.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </body>
 </html>
