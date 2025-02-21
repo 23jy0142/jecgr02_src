@@ -53,6 +53,9 @@ $selfregister_id = $_SESSION['selfregister_id'];
       </div>
     </div>
     <div class="main">
+        <div >
+                <button lass="invisible_btn" onclick="location.href='../dashboard/dashboard_login.php'"></button>
+        </div>
         <div class="container">
         <h1 id="center_msg">いらっしゃいませ</h1>
         </div>
