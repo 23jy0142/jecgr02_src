@@ -148,17 +148,23 @@ $pdf->SetFont("kozgopromedium", "B", 12);
 $pdf->Cell(50, 8, "合計", 0, 0);
 $pdf->Cell(20, 8, number_format($total_amount) . "円", 0, 1, "R");
 
-$pdf->SetFont("kozgopromedium", "B", 10);
-$pdf->Cell(50, 6, "支払い方法", 0, 0);
-$pdf->Cell(20, 8, $payment_method, 0, 1, "R");
-
 // お預かり・お釣り
-$pdf->SetFont("kozgopromedium", "", 10);
-$pdf->Cell(50, 6, "お預り", 0, 0);
-$pdf->Cell(20, 6, number_format($inputAmount) . "円", 0, 1, "R");
+if($method ==="cash"){
+    $pdf->SetFont("kozgopromedium", "", 10);
+    $pdf->Cell(50, 6, "お預り", 0, 0);
+    $pdf->Cell(20, 6, number_format($inputAmount) . "円", 0, 1, "R");
+    $pdf->Cell(50, 6, "お釣り", 0, 0);
+    $pdf->Cell(20, 6, number_format($change) . "円", 0, 1, "R");
+}else{
+    $pdf->SetFont("kozgopromedium", "B", 10);
+    $pdf->Cell(50, 6, "支払い方法", 0, 0);
+    $pdf->Cell(20, 8, $payment_method, 0, 1, "R");
+    $pdf->SetFont("kozgopromedium", "", 10);
+    $pdf->Cell(50, 6, "お預り", 0, 0);
+    $pdf->Cell(20, 6, number_format($total_amount) . "円", 0, 1, "R");
+}
 
-$pdf->Cell(50, 6, "お釣り", 0, 0);
-$pdf->Cell(20, 6, number_format($change) . "円", 0, 1, "R");
+
 
 $pdf->Ln(10);
 
