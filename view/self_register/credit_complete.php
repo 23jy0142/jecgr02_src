@@ -55,26 +55,6 @@ try {
         ]);
     }
 
-    /**
-    * カートにアイテムを追加する
-    **/
-    // サンプルコード
-    // function addCartItem($selfregister_id, $item_id, $quantity) {
-    //     $pdo = db_connect();
-        // $stmt = $pdo->prepare("INSERT INTO cart_items (selfregister_id, item_id, quantity) VALUES (:selfregister_id, :item_id, :quantity)
-        //     ON DUPLICATE KEY UPDATE quantity = quantity + :quantity");
-    //     $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
-    //     $stmt->bindParam(':item_id', $item_id, PDO::PARAM_STR);
-    //     $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
-    //     return $stmt->execute();
-    // }
-
-    
-    // foreach ($insert_office as $branch_office){
-    //     $stmt->execute([
-    //         ':selfregister_id' => $selfregister_id,
-    //     ]);
-    // }
     // カート内の商品を削除
     delete_cart_items($selfregister_id);
     update_selfregister_status($_SESSION['selfregister_id'], "4"); // ステータスを 2 に更新
@@ -120,26 +100,19 @@ try {
       <div class="container">
         <h1 id = "center_msg">ご利用ありがとうございます。</h1><br>
         <div class="content">
-          <h2 id="under_msg">お釣りの取り忘れにご注意ください</h2>
+          <h2 id="under_msg">カードのお忘れにご注意ください</h2>
           <div class="change_pay">
-              <h2>おつり</h2>
-              <p><strong class="change_text">おつり: <?= $change?> 円</strong></p>
           </div>
         </div>
       </div>
-      <a href="sample_pdf.php?inputAmount=<?=$_GET['input_amount'] ?>&trading_information_id=<?= $trading_information_id ?>" target="_blank">
-        レシート発行
-      </a>
-      <a href="index.php">aaaa</a>
-
-
+      <button onclick="createReceipt()">レシート発行</button>
     </div>
     <div class="footer">
         <div class="btn_box">
             <button onclick="location.href='index.php'">ホームに戻る</button>
         </div>
     </div>
-    <script type="module" src="../../asset/js/time.js"></script>
-    <script type="module" src="../../asset/js/create_receipt.js"></script>
+    <script src="../../asset/js/time.js"></script>
+    <script type="module" src="../../asset/create_receipt.js"></script>
 </body>
 </html>

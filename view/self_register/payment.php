@@ -56,6 +56,7 @@ $selfregister_id = $_SESSION['selfregister_id'];
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/cancelTransaction.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </footer>
 </body>
 </html>

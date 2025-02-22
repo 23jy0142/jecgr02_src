@@ -4,8 +4,8 @@ require_once 'cart_functions.php';
 
 function record_payment($selfregister_id, $total_amount, $method) {
   $INSERT_items = get_cart_items($selfregister_id);
-  $INSERT_branchoffice = get_branch_office($selfregister_id);
-  print($INSERT_branchoffice);
+  $insert_office = get_branch_office($selfregister_id);
+  print($insert_office);
     try {
         $pdo = db_connect();
 
@@ -17,7 +17,7 @@ function record_payment($selfregister_id, $total_amount, $method) {
             foreach ($INSERT_items as $item){
               $stmt->execute([
                   ':selfregister_id' => $selfregister_id,
-                  ':branchoffice_id' => $INSERT_branchoffice
+                  ':branchoffice_id' => $branch_office['branchoffice_id']
               ]);
           }
         return true;

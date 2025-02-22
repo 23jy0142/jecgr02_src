@@ -83,6 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
       </div>
     </div>
-    <script type="module" src="../../asset/js/time.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </body>
 </html>

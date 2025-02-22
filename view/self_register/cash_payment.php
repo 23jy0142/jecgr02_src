@@ -2,6 +2,7 @@
 require_once '../../dao/db_connect.php';
 require_once '../../dao/cart_functions.php';
 session_start();
+$_SESSION['selfregister_id'] = 101; // デフォルト値（本来はDBから取得すべき）
 $selfregister_id = $_SESSION['selfregister_id'];
 $cart_items = get_cart_items($selfregister_id);
 update_selfregister_status($selfregister_id, "2"); // ステータスを 2 に更新
@@ -86,7 +87,7 @@ $total_amount_tax += $total_amount * 1.1;
     <script src="../../asset/js/callingStaff.js"></script>
     <script src="../../asset/js/cancelTransaction.js"></script>
     <script src="../../asset/js/calculateChange.js"></script>
-    <script type="module" src="../../asset/js/time.js"></script>
+    <script src="../../asset/js/time.js"></script>
 </footer>
 </body>
 </html>

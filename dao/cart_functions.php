@@ -53,27 +53,6 @@ function get_cart_items($selfregister_id) {
     return $items;
 }
 // branchoffice_idD取得
-// function get_branch_office($selfregister_id) {
-//     school_db_connect($link);
-//     $branchoffice_id = "SELECT branchoffice_id FROM branch_office";
-//     $result = mysqli_query($link, $branchoffice_id);
-//     // $items = [];
-
-//     // while ($data = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-//     //     $items[] = [
-//     //         'selfregister_id' => $data['selfregister_id'],
-//     //         'cart_id' => $data['cart_id'],
-//     //         'item_id' => $data['item_id'],
-//     //         'product_name' => $data['product_name'],
-//     //         'quantity' => $data['quantity'],
-//     //         'price' => intval($data['price']),
-//     //         'added_at' => $data['added_at']
-//     //     ];
-//     // }
-//     mysqli_close($link);
-//     return $branchoffice_id;
-// }
-
 function get_branch_office($selfregister_id) {
     $pdo = db_connect();
     $sql = "SELECT branchoffice_id FROM self_register WHERE selfregister_id = :selfregister_id";
@@ -83,11 +62,17 @@ function get_branch_office($selfregister_id) {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['branchoffice_id'];
 }
-
-
-
-
-
+// trading_idを取得
+function get_trading_id($selfregister_id){
+    school_db_connect($link);
+    $query = "SELECT MAX(trading_information_id) FROM trading_information";
+    $result = mysqli_query($link, $query);
+    $row = mysqli_fetch_row($result);
+    $maxId = $row[0];
+    mysqli_close($link);
+    $_SESSION['trading_id'] = $maxId;
+    return $maxId;
+}
 /**
  * カートにアイテムを追加する
  */

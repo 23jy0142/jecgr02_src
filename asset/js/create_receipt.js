@@ -1,25 +1,25 @@
-function createReceipt(){
-  if(!window.selfregister_id){
-    console.log("✖ selfregister_idが未定義です");
-    alert("レジIDが取得できません");
-    return;
-  }
-  console.log("お支払い中...");
+function createReceipt(inputAmount, trading_information_id) {
+    // フォームを動的に作成
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '../../view/self_register/sample_pdf.php';
+    // form.target を削除すれば同じ画面で遷移します
 
-  fetch("../../dao/create_receipt.php",{
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      selfregister_id: window.selfregister_id,
-    }),
-  })
-  .then((response) => response.text())
-    .then((responseText) => {
-      console.log("✅ レシート作成処理成功:", responseText);
-      window.location.href = "../../view/self_register/payment.php";
-    })
-    .catch((error) => {
-      console.error("❌ お支払いエラー:", error);
-      alert("お支払い処理に失敗しました");
-    });
+    // inputAmountを追加
+    const input1 = document.createElement('input');
+    input1.type = 'hidden';
+    input1.name = 'inputAmount';
+    input1.value = inputAmount;
+    form.appendChild(input1);
+
+    // trading_information_idを追加
+    const input2 = document.createElement('input');
+    input2.type = 'hidden';
+    input2.name = 'trading_information_id';
+    input2.value = trading_information_id;
+    form.appendChild(input2);
+
+    // フォームをbodyに追加して送信
+    document.body.appendChild(form);
+    form.submit();
 }
