@@ -53,26 +53,41 @@ function get_cart_items($selfregister_id) {
     return $items;
 }
 // branchoffice_idD取得
-function get_branch_office($selfregister_id) {
-    school_db_connect($link);
-    $branchoffice_id = "SELECT branchoffice_id FROM branch_office";
-    $result = mysqli_query($link, $branchoffice_id);
-    // $items = [];
+// function get_branch_office($selfregister_id) {
+//     school_db_connect($link);
+//     $branchoffice_id = "SELECT branchoffice_id FROM branch_office";
+//     $result = mysqli_query($link, $branchoffice_id);
+//     // $items = [];
 
-    // while ($data = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-    //     $items[] = [
-    //         'selfregister_id' => $data['selfregister_id'],
-    //         'cart_id' => $data['cart_id'],
-    //         'item_id' => $data['item_id'],
-    //         'product_name' => $data['product_name'],
-    //         'quantity' => $data['quantity'],
-    //         'price' => intval($data['price']),
-    //         'added_at' => $data['added_at']
-    //     ];
-    // }
-    mysqli_close($link);
-    return $branchoffice_id;
+//     // while ($data = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+//     //     $items[] = [
+//     //         'selfregister_id' => $data['selfregister_id'],
+//     //         'cart_id' => $data['cart_id'],
+//     //         'item_id' => $data['item_id'],
+//     //         'product_name' => $data['product_name'],
+//     //         'quantity' => $data['quantity'],
+//     //         'price' => intval($data['price']),
+//     //         'added_at' => $data['added_at']
+//     //     ];
+//     // }
+//     mysqli_close($link);
+//     return $branchoffice_id;
+// }
+
+function get_branch_office($selfregister_id) {
+    $pdo = db_connect();
+    $sql = "SELECT branchoffice_id FROM self_register WHERE selfregister_id = :selfregister_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":selfregister_id",$selfregister_id,PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['branchoffice_id'];
 }
+
+
+
+
+
 /**
  * カートにアイテムを追加する
  */
