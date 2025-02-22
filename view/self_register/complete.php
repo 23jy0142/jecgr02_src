@@ -127,7 +127,7 @@ try {
           </div>
         </div>
       </div>
-      <a href="sampple_pdf.php?inputAmount=<?=$_GET['input_amount'] ?>&trading_information_id=<?= $trading_information_id ?>" target="_blank">
+      <a href="sample_pdf.php?inputAmount=<?=$_GET['input_amount'] ?>&trading_information_id=<?= $trading_information_id ?>" target="_blank">
         レシート発行
       </a>
       <a href="index.php">aaaa</a>
