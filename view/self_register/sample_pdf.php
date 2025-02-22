@@ -57,6 +57,7 @@ session_start();
 $selfregister_id = $_SESSION['selfregister_id'] ?? null;
 $inputAmount = $_GET['inputAmount'];
 $trading_id = $_GET['trading_information_id'];
+$method = $_GET['method'] ?? 'cash';
 $items = get_trading_data($selfregister_id,$trading_id);
 
 if (!$selfregister_id) {
@@ -69,6 +70,7 @@ if (!$selfregister_id) {
 $branch_name   = $items[0]["branchoffice_name"] ?? "店舗名未設定";
 $tel           = $items[0]["TEL"] ?? "TEL未設定";
 $trading_time  = $items[0]["payment_date"] ?? date("Y-m-d H:i");
+$payment_method = ($method === 'credit') ? "クレジットカード支払い" : "現金支払い"; 
 // お預かりダミー
 // $inputAmount = 10000; 
 
@@ -146,6 +148,10 @@ $pdf->SetFont("kozgopromedium", "B", 12);
 $pdf->Cell(50, 8, "合計", 0, 0);
 $pdf->Cell(20, 8, number_format($total_amount) . "円", 0, 1, "R");
 
+$pdf->SetFont("kozgopromedium", "B", 10);
+$pdf->Cell(50, 6, "支払い方法", 0, 0);
+$pdf->Cell(20, 8, $payment_method, 0, 1, "R");
+
 // お預かり・お釣り
 $pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(50, 6, "お預り", 0, 0);
@@ -159,6 +165,26 @@ $pdf->Ln(10);
 // フッター
 $pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(0, 6, "またのご来店お待ちしております", 0, 1, "C");
+
+// **🔟 クレジットカードご利用票を追加**
+if ($method === 'credit') {
+    $pdf->AddPage();
+    $pdf->SetFont("kozgopromedium", "B", 12);
+    $pdf->Cell(0, 8, "[ クレジットカードご利用票 ]", 0, 1, "C");
+
+    $pdf->SetFont("kozgopromedium", "", 10);
+    $pdf->Cell(50, 6, "加盟店名:" . $branch_name, 0, 1);
+    $pdf->Cell(50, 6, "ご利用日時: " . $trading_time, 0, 1);
+    $pdf->Cell(50, 6, "伝票番号:".$trading_id, 0, 1);
+    $pdf->Cell(50, 6, "合計金額: " . number_format($total_amount) . "円", 0, 1);
+    $pdf->Cell(50, 6, "カード会社: Mastercard", 0, 1);
+    $pdf->Cell(50, 6, "カード番号: IC 9999XXXXXX9999", 0, 1);
+    $pdf->Cell(50, 6, "支払い方法: 1回払い", 0, 1);
+    $pdf->Cell(50, 6, "取引内容: 売上". number_format($total_amount)."円",1,1);
+    $pdf->Cell(50, 6, "承認番号: XXXXXX", 0, 1);
+    $pdf->Ln(5);
+    $pdf->Cell(50, 6, "加盟店控え", 0, 1, "C");
+}
 
 // PDFを出力
 $pdf->Output("receipt.pdf", "I");

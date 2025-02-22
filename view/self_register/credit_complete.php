@@ -105,7 +105,9 @@ try {
           </div>
         </div>
       </div>
-      <button onclick="createReceipt()">レシート発行</button>
+      <a href="sample_pdf.php?inputAmount=<?=$total_amount ?>&trading_information_id=<?= $trading_information_id ?>&method=credit" target="_blank">
+        レシート発行
+      </a>
     </div>
     <div class="footer">
         <div class="btn_box">
