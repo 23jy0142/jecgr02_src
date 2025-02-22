@@ -64,8 +64,6 @@ if (!$selfregister_id) {
     die("❌ セッションに selfregister_id がありません");
 }
 
-
-
 // 変数定義（取得したデータの最初の要素から）
 $branch_name   = $items[0]["branchoffice_name"] ?? "店舗名未設定";
 $tel           = $items[0]["TEL"] ?? "TEL未設定";
@@ -77,17 +75,26 @@ $payment_method = ($method === 'credit') ? "クレジットカード支払い" :
 // 計算
 $subtotal = 0;
 $total_quantity = 0;
+$receipt_row = 110;
 foreach ($items as $item) {
     $total_quantity += $item["quantity"];
     $subtotal += $item["quantity"] * $item["item_price"];
+    if($item["quantity"] > 1){
+        $receipt_row += 7;
+    }
 }
 $tax = round($subtotal * 0.1); // 消費税10%
 $total_amount = $subtotal + $tax; // 合計金額
 $change = $inputAmount - $total_amount; // お釣り
 $length = 7 * count($items);
 
+//現金かクレジットか
+if($payment_method === 'クレジットカード支払い'){
+    $receipt_row += 70;
+}
+
 // TCPDFオブジェクトを作成
-$pdf = new TCPDF("P", "mm", array(80, (100 + $length)), true, "UTF-8", false);
+$pdf = new TCPDF("P", "mm", array(80, ($receipt_row + $length)), true, "UTF-8", false);
 $pdf->SetMargins(5, 5, 5);
 $pdf->SetAutoPageBreak(true, 5);
 $pdf->AddPage();
@@ -96,18 +103,18 @@ $pdf->AddPage();
 $pdf->SetFont("kozgopromedium", "", 12);
 
 // ヘッダー（店名・電話番号・日付）
-$pdf->Image("../../asset\image\gase2.jpg", 20, 6, 40);
+$pdf->Image("../../asset/image/gase2.jpg", 20, 6, 40);
 $pdf->Ln(14);
 $pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(0, 5, "TEL: " . $tel, 0, 1, "C");
 $pdf->Cell(0, 5, $trading_time, 0, 1, "C");
-$pdf->Cell(0, 5, "レシート番号：".($trading_id), 0, 1, "R");
-$pdf->Cell(0, 5, "レジ番号：".($selfregister_id), 0, 1, "R");
+$pdf->Cell(0, 5, "レシート番号：".($trading_id) . "　　レジ番号：".($selfregister_id), 0, 1, "C");
+// $pdf->Cell(0, 5, , 0, 1, "R");
 
 // タイトル
-$pdf->SetFont("kozgopromedium", "B", 14);
+$pdf->SetFont("kozgopromedium", "", 14);
 $pdf->Cell(0, 8, "＊～*～*～＊ 領収書 ＊～*～*～＊", 0, 1, "C");
-$pdf->Ln(1);
+$pdf->Ln(2);
 
 // 商品リスト
 $pdf->SetFont("kozgopromedium", "", 10);
@@ -116,11 +123,14 @@ foreach ($items as $item) {
     $pdf->Cell(30, 6, $item["quantity"] . "個", 0, 0, "R");
     $pdf->Cell(20, 6, number_format($item["quantity"] * $item["item_price"]) . "円", 0, 1, "R");
     if ($item["quantity"] > 1) {
-        $pdf->Cell(50, 6, "単" . $item["item_price"] . "円", 0, 1);
+        $pdf->Cell(50, 6, "単" . $item["item_price"] . "円", 0, 1 ,"C");
     }
     
 }
-$pdf->Ln(5);
+$pdf->Ln(2);
+
+$pdf->SetFont("kozgopromedium", "", 14);
+$pdf->Cell(0, 8, "＊～*～*～＊ ～＊～ ＊～*～*～＊", 0, 1, "C");
 
 // デバッグ用にログ出力
 // file_put_contents(__DIR__ . '/debug_pdf_loop.txt', "アイテム数: " . count($items) . "\n");
@@ -138,16 +148,17 @@ $pdf->Ln(5);
 
 
 // 小計・消費税・合計
+$pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(50, 6, "小計", 0, 0);
 $pdf->Cell(20, 6, number_format($subtotal) . "円", 0, 1, "R");
 
-$pdf->Cell(50, 6, "消費税 (10%)", 0, 0);
+$pdf->Cell(50, 6, "消費税 (  10%)", 0, 0);
 $pdf->Cell(20, 6, number_format($tax) . "円", 0, 1, "R");
 
-$pdf->SetFont("kozgopromedium", "B", 12);
+$pdf->SetFont("kozgopromedium", "B", 14);
 $pdf->Cell(50, 8, "合計", 0, 0);
 $pdf->Cell(20, 8, number_format($total_amount) . "円", 0, 1, "R");
-
+$pdf->Ln(3);
 // お預かり・お釣り
 if($method ==="cash"){
     $pdf->SetFont("kozgopromedium", "", 10);
@@ -164,17 +175,10 @@ if($method ==="cash"){
     $pdf->Cell(20, 6, number_format($total_amount) . "円", 0, 1, "R");
 }
 
-
-
-$pdf->Ln(10);
-
-// フッター
-$pdf->SetFont("kozgopromedium", "", 10);
-$pdf->Cell(0, 6, "またのご来店お待ちしております", 0, 1, "C");
+$pdf->Ln(5);
 
 // **🔟 クレジットカードご利用票を追加**
 if ($method === 'credit') {
-    $pdf->AddPage();
     $pdf->SetFont("kozgopromedium", "B", 12);
     $pdf->Cell(0, 8, "[ クレジットカードご利用票 ]", 0, 1, "C");
 
@@ -191,6 +195,10 @@ if ($method === 'credit') {
     $pdf->Ln(5);
     $pdf->Cell(50, 6, "加盟店控え", 0, 1, "C");
 }
+
+// フッター
+$pdf->SetFont("kozgopromedium", "", 10);
+$pdf->Cell(0, 6, "またのご来店お待ちしております", 0, 1, "C");
 
 // PDFを出力
 $pdf->Output("receipt.pdf", "I");
