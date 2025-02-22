@@ -6,11 +6,27 @@ ob_start();
 // get_trading_data関数でデータを取得
 function get_trading_data($selfregister_id,$trading_id) {
     $pdo = db_connect();
+//     $query = "
+//     SELECT 
+//         bo.branchoffice_name, 
+//         bo.phone_number AS TEL, 
+//         MAX(si.trading_information_id), 
+//         si.payment_date, 
+//         mi.product_name, 
+//         mi.item_price, 
+//         si.quantity, 
+//         mi.item_price * si.quantity AS '点数金額'
+//     FROM master_item AS mi
+//     INNER JOIN sales_items AS si ON mi.item_id = si.item_id
+//     INNER JOIN branch_office AS bo ON mi.branchoffice_id = bo.branchoffice_id
+//     WHERE si.trading_information_id = :trading_information_id
+// ";
+
     $query = "
     SELECT 
         bo.branchoffice_name, 
         bo.phone_number AS TEL, 
-        MAX(si.trading_information_id), 
+        si.trading_information_id,
         si.payment_date, 
         mi.product_name, 
         mi.item_price, 
@@ -20,7 +36,7 @@ function get_trading_data($selfregister_id,$trading_id) {
     INNER JOIN sales_items AS si ON mi.item_id = si.item_id
     INNER JOIN branch_office AS bo ON mi.branchoffice_id = bo.branchoffice_id
     WHERE si.trading_information_id = :trading_information_id
-";
+    ";
 
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':trading_information_id', $trading_id, PDO::PARAM_INT);
@@ -60,8 +76,8 @@ $trading_time  = $items[0]["payment_date"] ?? date("Y-m-d H:i");
 $subtotal = 0;
 $total_quantity = 0;
 foreach ($items as $item) {
-    $subtotal += $item["quantity"] * $item["item_price"];
     $total_quantity += $item["quantity"];
+    $subtotal += $item["quantity"] * $item["item_price"];
 }
 $tax = round($subtotal * 0.1); // 消費税10%
 $total_amount = $subtotal + $tax; // 合計金額
@@ -100,8 +116,24 @@ foreach ($items as $item) {
     if ($item["quantity"] > 1) {
         $pdf->Cell(50, 6, "単" . $item["item_price"] . "円", 0, 1);
     }
+    
 }
 $pdf->Ln(5);
+
+// デバッグ用にログ出力
+// file_put_contents(__DIR__ . '/debug_pdf_loop.txt', "アイテム数: " . count($items) . "\n");
+
+// foreach ((array)$items as $key => $item) {
+//     file_put_contents(__DIR__ . '/debug_pdf_loop.txt', "ループ回数: " . $key . " - 商品名: " . $item["product_name"] . "\n", FILE_APPEND);
+
+//     $pdf->Cell(40, 6, $item["product_name"], 1, 0, "L");
+//     $pdf->Cell(15, 6, $item["quantity"] . "個", 1, 0, "C");
+//     $pdf->Cell(20, 6, number_format($item["点数金額"]) . "円", 1, 1, "R");
+// }
+// $pdf->Ln(5);
+
+
+
 
 // 小計・消費税・合計
 $pdf->Cell(50, 6, "小計", 0, 0);
