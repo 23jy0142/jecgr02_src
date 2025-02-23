@@ -35,10 +35,48 @@ $selfregister_id = $_SESSION['selfregister_id'];
             background-position: center;
             background-repeat: no-repeat;
         } */
+        #secretButton {
+            opacity: 0; /* 透明にする */
+            position: absolute; /* ページ内の適切な位置に配置 */
+            top: 10px; /* 例: 上部10px */
+            left: 10px; /* 例: 左端から10px */
+            width: 50px; /* 小さめの範囲にする */
+            height: 30px;
+            z-index: 1000; /* 他の要素より前面に配置 */
+            cursor: pointer; /* クリックできるように */
+        }
     </style>
     <script>
         window.selfregister_id = <?= json_encode($selfregister_id)?>;
         console.log("selfregister_id:",window.selfregister_id);
+
+        document.addEventListener("DOMContentLoaded", function() {
+    let clickCount = 0;
+    let timer;
+    const button = document.getElementById('secretButton');
+
+    if (button) { // ボタンが存在するか確認
+        button.addEventListener('click', function() {
+            clickCount++;
+
+            // 最初のクリックでタイマーをセット
+            if (clickCount === 1) {
+                timer = setTimeout(function() {
+                    clickCount = 0; // 5秒後にリセット
+                }, 5000);
+            }
+
+            // クリック数が3回に達したら
+            if (clickCount >= 3) {
+                clearTimeout(timer);
+                window.location.href = '../dashboard/dashboard_login.php'; // 遷移先
+            }
+        });
+    } else {
+        console.error("ボタンが見つかりません: secretButton");
+    }
+});
+
     </script>
 </head>
 
@@ -46,16 +84,14 @@ $selfregister_id = $_SESSION['selfregister_id'];
     <!-- ヘッダー部分 -->
     <div class="header">
       <header class="header_left">
-        
+      <!-- 隠しコマンド用のボタン -->
+    <button id="secretButton">管理者ボタン</button>
       </header>
       <div class="header_right">
         <span id="now"></span>
       </div>
     </div>
     <div class="main">
-        <div >
-                <button lass="invisible_btn" onclick="location.href='../dashboard/dashboard_login.php'"></button>
-        </div>
         <div class="container">
         <h1 id="center_msg">いらっしゃいませ</h1>
         </div>
