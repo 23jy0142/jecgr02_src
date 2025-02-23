@@ -85,7 +85,7 @@ $selfregister_id = $_SESSION['selfregister_id'];
     <div class="header">
       <header class="header_left">
       <!-- 隠しコマンド用のボタン -->
-    <button id="secretButton">管理者ボタン</button>
+    <button id="secretButton">管理者ログイン用ボタン</button>
       </header>
       <div class="header_right">
         <span id="now"></span>
