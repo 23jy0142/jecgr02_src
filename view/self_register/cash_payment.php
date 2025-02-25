@@ -81,7 +81,7 @@ $total_amount_tax += floor($total_amount * 1.1);
         <div class="btn_box">
             <button class="btn_gray btn" onclick="callingStaff()">呼び出し</button>
             <button class="btn_red btn" onclick="cancelTransaction()">取引中止</button>
-            <button class="btn" onclick="location.href='payment.php'">戻る</button>
+            <button class="btn_white btn" onclick="location.href='payment.php'">戻る</button>
         </div>
     </div>
     <script src="../../asset/js/callingStaff.js"></script>
