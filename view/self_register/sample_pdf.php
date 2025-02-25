@@ -27,7 +27,8 @@ function get_trading_data($selfregister_id,$trading_id) {
         bo.branchoffice_name, 
         bo.phone_number AS TEL, 
         si.trading_information_id,
-        si.payment_date, 
+        si.payment_date,
+        item_tax,
         mi.product_name, 
         mi.item_price, 
         si.quantity, 
@@ -73,22 +74,46 @@ $payment_method = ($method === 'credit') ? "クレジットカード支払い" :
 // $inputAmount = 10000; 
 
 // 計算
-$subtotal = 0;
-$total_quantity = 0;
-$receipt_row = 110;
+$subtotal = 0;             // 小計
+$total_quantity = 0;       // 合計個数
+$receipt_row = 110;        // レシートの長さ
+$tax_state = 0;            // 小計で行を増やすための値
+$totalPrice_8tax = 0;      // 消費税８％の商品の合計計算（税抜き）
+$totalPrice_10tax = 0;     // 消費税１０％の商品の合計計算（税抜き）
+$totalPrice_8state = 0;       //小計の消費税の行表示用。8%
+$totalPrice_10state = 0;       //小計の消費税の行表示用。10%
 foreach ($items as $item) {
+    $tax = $item["item_tax"];
     $total_quantity += $item["quantity"];
     $subtotal += $item["quantity"] * $item["item_price"];
     if($item["quantity"] > 1){
         $receipt_row += 7;
     }
+    if($tax == 0.08){
+        $totalPrice_8tax += $item["item_price"];
+    }elseif($tax == 0.10){
+        $totalPrice_10tax += $item["item_price"];
+    }
+    if($tax == 0.08 && ($tax_state == 0 || $tax_state == 1)){
+        $tax_state++;
+        $receipt_row += 4;
+        $totalPrice_8state = 1;
+        $consumption_8tax = round($subtotal * 0.08);
+    }elseif($tax == 0.10 && ($tax_state == 0 || $tax_state == 1)){
+        $tax_state++;
+        $receipt_row += 4;
+        $totalPrice_10state = 1;
+        $consumption_10tax = round($subtotal * 0.10);
+    }
+    
 }
-$tax = round($subtotal * 0.1); // 消費税10%
+
+
 $total_amount = $subtotal + $tax; // 合計金額
 $change = $inputAmount - $total_amount; // お釣り
-$length = 7 * count($items);
 
-//現金かクレジットか
+//レシートの長さ＋現金かクレジットか
+$length = 7 * count($items);
 if($payment_method === 'クレジットカード支払い'){
     $receipt_row += 70;
 }
@@ -145,19 +170,29 @@ $pdf->Cell(0, 8, "＊～*～*～＊ ～＊～ ＊～*～*～＊", 0, 1, "C");
 // $pdf->Ln(5);
 
 
-
+ 
 
 // 小計・消費税・合計
 $pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(50, 6, "小計", 0, 0);
 $pdf->Cell(20, 6, number_format($subtotal) . "円", 0, 1, "R");
-
-$pdf->Cell(50, 6, "消費税 (  10%)", 0, 0);
-$pdf->Cell(20, 6, number_format($tax) . "円", 0, 1, "R");
-
+if(($totalPrice_10state == 1 ||  $totalPrice_8state == 1) && $tax_state == 1) {
+    if($totalPrice_8state == 1){
+        $pdf->Cell(50, 6, "消費税 (  8%)", 0, 0);
+        $pdf->Cell(20, 6, number_format($totalPrice_8tax) . "円", 0, 1, "R");
+    }elseif($totalPrice_10state == 1) {
+        $pdf->Cell(50, 6, "消費税 (  10%)", 0, 0);
+        $pdf->Cell(20, 6, number_format($totalPrice_10tax) . "円", 0, 1, "R");
+    }
+}else{
+    $pdf->Cell(50, 6, "消費税 (  8%)", 0, 0);
+    $pdf->Cell(20, 6, number_format($totalPrice_8tax) . "円", 0, 1, "R");
+    $pdf->Cell(50, 6, "消費税 (  10%)", 0, 0);
+    $pdf->Cell(20, 6, number_format($totalPrice_10tax) . "円", 0, 1, "R");
+}
 $pdf->SetFont("kozgopromedium", "B", 14);
 $pdf->Cell(50, 8, "合計", 0, 0);
-$pdf->Cell(20, 8, number_format($total_amount) . "円", 0, 1, "R");
+$pdf->Cell(20, 8, number_format($total_amount + $totalPrice_8tax + $totalPrice_10tax) .  "円", 0, 1, "R");
 $pdf->Ln(3);
 // お預かり・お釣り
 if($method ==="cash"){
@@ -172,7 +207,7 @@ if($method ==="cash"){
     $pdf->Cell(20, 8, $payment_method, 0, 1, "R");
     $pdf->SetFont("kozgopromedium", "", 10);
     $pdf->Cell(50, 6, "お預り", 0, 0);
-    $pdf->Cell(20, 6, number_format($total_amount) . "円", 0, 1, "R");
+    $pdf->Cell(20, 6, number_format($total_amount + $totalPrice_8tax + $totalPrice_10tax) . "円", 0, 1, "R");
 }
 
 $pdf->Ln(5);
