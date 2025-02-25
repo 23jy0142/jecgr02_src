@@ -22,7 +22,7 @@ try {
     // 支払い方法の取得
     $method = $_GET['method'] ?? '不明';
     $input_amount = $_GET['input_amount'] ?? 0;
-    $change = max($input_amount - $total_amount_tax, 0);
+    $change = max($input_amount - $total_amount, 0);
 
     // 支払情報を　trading_information テーブルに取得
     $pdo = db_connect();

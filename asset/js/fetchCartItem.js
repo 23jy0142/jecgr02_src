@@ -25,8 +25,10 @@ $(document).ready(function () {
                                   <td>${Math.floor(item.price)} 円</td>
                               </tr>`;
               // 合計点数と合計金額を計算
+              
               totalQuantity += parseInt(item.quantity);
-              totalPrice += parseInt(item.price) * parseInt(item.quantity);
+              totalPrice += parseInt(item.price);
+
               // `<tfoot>` に合計値を反映
               $("#cart-items tfoot").html(`
                 <tr>
