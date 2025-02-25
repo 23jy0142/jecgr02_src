@@ -12,10 +12,10 @@ $total_amount = 0;
 $total_amount_tax = 0;
 $total_quantity = 0;
 foreach ($cart_items as $item) {
-    $total_amount += $item['price'] * $item['quantity'];
+    $total_amount += floor($item['price'] * $item['quantity']);
     $total_quantity += $item['quantity'];
 }
-$total_amount_tax += $total_amount * 1.1;
+$total_amount_tax += floor($total_amount * 1.1);
 ?>
 
 <!DOCTYPE html>
