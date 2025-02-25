@@ -13,17 +13,10 @@ if (!$selfregister_id) {
 try {
     // カート内の商品取得
     $cart_items = get_cart_items($selfregister_id);
-    
+    //合計金額の取得
+    $total_amount = get_item_tax($selfregister_id);
     if (empty($cart_items)) {
         die("❌ カート内の商品がありません");
-    }
-
-    // 合計金額を計算
-    $total_amount = 0;
-    $total_amount_tax = 0;
-    foreach ($cart_items as $item) {
-        $total_amount += $item['price'] * $item['quantity'];
-        $total_amount_tax = $total_amount * 1.1;
     }
 
     // 支払い方法の取得
@@ -123,7 +116,7 @@ try {
           <h2 id="under_msg">お釣りの取り忘れにご注意ください</h2>
           <div class="change_pay">
               <h2>おつり</h2>
-              <p><strong class="change_text">おつり: <?= $change?> 円</strong></p>
+              <p><strong class="change_text">おつり: <?= floor($change)?> 円</strong></p>
           </div>
         </div>
       </div>

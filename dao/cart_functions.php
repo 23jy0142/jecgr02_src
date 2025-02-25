@@ -52,6 +52,28 @@ function get_cart_items($selfregister_id) {
     mysqli_close($link);
     return $items;
 }
+/**
+ * カート内の商品の合計金額を取得する
+ */
+function get_item_tax($selfregister_id) {
+    $pdo = db_connect();
+    $stmt = $pdo->prepare("SELECT item_id, price, quantity, age_verification FROM cart_items WHERE selfregister_id = :selfregister_id");
+    $stmt->bindParam(':selfregister_id', $selfregister_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $totalAmount = 0;
+
+    foreach($cartItems as $item){
+        $price = (float)$item['price'];
+        $quantity = (int)$item['quantity'];
+        $ageVerification = (int)$item['age_verification'];
+
+        $item_tax = ($ageVerification === 2) ? 1.1 : 1.08;
+        $itemTotal = round($price * $item_tax * $quantity);
+        $totalAmount += $itemTotal;
+    }
+    return $totalAmount;
+}
 // branchoffice_idD取得
 function get_branch_office($selfregister_id) {
     $pdo = db_connect();

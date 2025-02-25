@@ -9,6 +9,7 @@ if (!isset($_SESSION['selfregister_id'])) {
 }
 $selfregister_id = $_SESSION['selfregister_id'];
 update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に更新
+$total_item_tax = get_item_tax($selfregister_id);
 ?>
 
 <!DOCTYPE html>
@@ -87,5 +88,6 @@ update_selfregister_status($selfregister_id, "1"); // ステータスを 1 に�
     <script src="../../asset/js/goToPayment.js"></script>
     <script src="../../asset/js/time.js"></script>
     <script src="../../asset/js/cancelTransaction.js"></script>
+    
 </body>
 </html>
