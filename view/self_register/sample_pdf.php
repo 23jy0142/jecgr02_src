@@ -90,23 +90,24 @@ foreach ($items as $item) {
         $receipt_row += 7;
     }
     if($tax == 0.08){
-        $totalPrice_8tax += $item["item_price"];
-    }elseif($tax == 0.10){
-        $totalPrice_10tax += $item["item_price"];
+        $totalPrice_8tax += $item["item_price"] * $item["quantity"];
+    }elseif($tax == 0.1){
+        $totalPrice_10tax += $item["item_price"] * $item["quantity"];
     }
     if($tax == 0.08 && ($tax_state == 0 || $tax_state == 1)){
         $tax_state++;
         $receipt_row += 4;
         $totalPrice_8state = 1;
-        $consumption_8tax = round($subtotal * 0.08);
-    }elseif($tax == 0.10 && ($tax_state == 0 || $tax_state == 1)){
+        
+    }elseif($tax == 0.1 && ($tax_state == 0 || $tax_state == 1)){
         $tax_state++;
         $receipt_row += 4;
         $totalPrice_10state = 1;
-        $consumption_10tax = round($subtotal * 0.10);
     }
     
 }
+$consumption_8tax = round($totalPrice_8tax * 0.08);
+$consumption_10tax = round($totalPrice_10tax * 0.1);
 
 
 $total_amount = $subtotal + $tax; // 合計金額
@@ -176,23 +177,23 @@ $pdf->Cell(0, 8, "＊～*～*～＊ ～＊～ ＊～*～*～＊", 0, 1, "C");
 $pdf->SetFont("kozgopromedium", "", 10);
 $pdf->Cell(50, 6, "小計", 0, 0);
 $pdf->Cell(20, 6, number_format($subtotal) . "円", 0, 1, "R");
-if(($totalPrice_10state == 1 ||  $totalPrice_8state == 1) && $tax_state == 1) {
+if($tax_state == 1) {
     if($totalPrice_8state == 1){
         $pdf->Cell(50, 6, "消費税 (  8%)", 0, 0);
-        $pdf->Cell(20, 6, number_format($totalPrice_8tax) . "円", 0, 1, "R");
+        $pdf->Cell(20, 6, number_format($consumption_8tax) . "円", 0, 1, "R");
     }elseif($totalPrice_10state == 1) {
         $pdf->Cell(50, 6, "消費税 (  10%)", 0, 0);
-        $pdf->Cell(20, 6, number_format($totalPrice_10tax) . "円", 0, 1, "R");
+        $pdf->Cell(20, 6, number_format($consumption_10tax) . "円", 0, 1, "R");
     }
-}else{
+}elseif($tax_state == 2){
     $pdf->Cell(50, 6, "消費税 (  8%)", 0, 0);
-    $pdf->Cell(20, 6, number_format($totalPrice_8tax) . "円", 0, 1, "R");
+    $pdf->Cell(20, 6, number_format($consumption_8tax) . "円", 0, 1, "R");
     $pdf->Cell(50, 6, "消費税 (  10%)", 0, 0);
-    $pdf->Cell(20, 6, number_format($totalPrice_10tax) . "円", 0, 1, "R");
+    $pdf->Cell(20, 6, number_format($consumption_10tax) . "円", 0, 1, "R");
 }
 $pdf->SetFont("kozgopromedium", "B", 14);
 $pdf->Cell(50, 8, "合計", 0, 0);
-$pdf->Cell(20, 8, number_format($total_amount + $totalPrice_8tax + $totalPrice_10tax) .  "円", 0, 1, "R");
+$pdf->Cell(20, 8, number_format(($total_amount) + ($consumption_8tax + $consumption_10tax)) .  "円", 0, 1, "R");
 $pdf->Ln(3);
 // お預かり・お釣り
 if($method ==="cash"){
@@ -207,7 +208,7 @@ if($method ==="cash"){
     $pdf->Cell(20, 8, $payment_method, 0, 1, "R");
     $pdf->SetFont("kozgopromedium", "", 10);
     $pdf->Cell(50, 6, "お預り", 0, 0);
-    $pdf->Cell(20, 6, number_format($total_amount + $totalPrice_8tax + $totalPrice_10tax) . "円", 0, 1, "R");
+    $pdf->Cell(20, 6, number_format($total_amount + $consumption_8tax + $consumption_10tax) . "円", 0, 1, "R");
 }
 
 $pdf->Ln(5);
