@@ -161,9 +161,9 @@ session_start();
 <body onload="startClock()">
     <!-- ヘッダー部分 -->
     <div class="header">
-      <!-- <header class="header_left">
-        <span>ログインユーザー名： </span>
-      </header> -->
+      <header class="header_left">
+        <!-- <span>ログインユーザー名： </span> -->
+      </header>
       <div class="header_right">
         <span id="now"></span>
       </div>
