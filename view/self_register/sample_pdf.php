@@ -101,7 +101,7 @@ foreach ($items as $item) {
         $totalPrice_8state = 1;
         
     }
-    if($tax == 0.1 && ($tax_state == 0 || $tax_state == 1 || $tax_state == 2) && $totalPrice_state == 0 ){
+    if($tax == 0.1 && ($tax_state == 0 || $tax_state == 1 || $tax_state == 2) && $totalPrice_10state == 0 ){
         $tax_state += 2;
         $receipt_row += 4;
         $totalPrice_10state = 1;
