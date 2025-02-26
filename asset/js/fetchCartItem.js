@@ -29,7 +29,7 @@ $(document).ready(function () {
               console.log("totalQuantity:" + totalQuantity);
               console.log("totalPrice:" + totalPrice);
               totalQuantity += parseInt(item.quantity);
-              totalPrice += parseInt(item.price);
+              totalPrice += parseInt(item.price)*parseInt(item.quantity);
               // エラー
               // totalPrice += parseInt(item.price * item.Quantity);
               // totalPrice += 130 * (6 -5); 

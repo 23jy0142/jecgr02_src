@@ -12,7 +12,7 @@ $total_amount = 0;
 $total_amount_tax = 0;
 $total_quantity = 0;
 foreach ($cart_items as $item) {
-    $total_amount += floor($item['price']);
+    $total_amount += floor($item['price']*$item['quantity']);
     $total_quantity += $item['quantity'];
 }
 $total_amount_tax = get_item_tax($selfregister_id);

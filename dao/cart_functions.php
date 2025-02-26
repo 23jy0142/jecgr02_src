@@ -70,7 +70,7 @@ function get_item_tax($selfregister_id) {
 
         $item_tax = ($ageVerification === 2) ? 1.1 : 1.08;
         $itemTotal = round($price * $item_tax );
-        $totalAmount += $itemTotal;
+        $totalAmount += $itemTotal*$quantity;
     }
     return $totalAmount;
 }
