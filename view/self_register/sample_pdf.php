@@ -101,7 +101,7 @@ foreach ($items as $item) {
         $totalPrice_8state = 1;
         
     }
-    if($tax == 0.1 && ($tax_state == 0 || $tax_state == 1 || $tax_state == 2) && $totalPrice_10state == 0 ){
+    if($tax == 0.1 && ($tax_state == 0 || $tax_state == 1 || $tax_state == 2) && $totalPrice_state == 0 ){
         $tax_state += 2;
         $receipt_row += 4;
         $totalPrice_10state = 1;
@@ -199,7 +199,7 @@ $pdf->Cell(50, 8, "合計", 0, 0);
 $pdf->Cell(20, 8, number_format($total_amount) .  "円", 0, 1, "R");
 $pdf->Ln(3);
 // お預かり・お釣り
-if($method ==="cash"){
+if($method === 'cash'){
     $pdf->SetFont("kozgopromedium", "", 10);
     $pdf->Cell(50, 6, "お預り", 0, 0);
     $pdf->Cell(20, 6, number_format($inputAmount) . "円", 0, 1, "R");
@@ -211,7 +211,7 @@ if($method ==="cash"){
     $pdf->Cell(20, 8, $payment_method, 0, 1, "R");
     $pdf->SetFont("kozgopromedium", "", 10);
     $pdf->Cell(50, 6, "お預り", 0, 0);
-    $pdf->Cell(20, 6, number_format($payment_method - $total_amount) . "円", 0, 1, "R");
+    $pdf->Cell(20, 6, number_format($total_amount) . "円", 0, 1, "R");
 }
 
 $pdf->Ln(5);
