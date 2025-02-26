@@ -1,5 +1,8 @@
 $(document).ready(function () {
   function updateCartItems() {
+    let totalQuantity = 0; //合計個数
+    let totalPrice = 0; // すべての商品の合計（税抜き）
+    let quantityPrice = 0; //商品ごとの小計
     $.ajax({
       url: "../../dao/fetch_cart_items.php", // 非同期でデータ取得
       type: "GET",
@@ -9,15 +12,13 @@ $(document).ready(function () {
         console.log("サーバーからのレスポンス:", response); // データの確認
         console.log(response.data);
         let requiresAgeVerification = "2"; // 年齢確認が必要か判定
-        let totalQuantity = 0;
-        let totalPrice = 0;
+        
         if (response.success) {
           let tableContent = "";
 
           if (response.data.length > 0) {
             $.each(response.data, function (index, item) {
               console.log("商品データ:", item); // 各商品データを確認
-
               tableContent += `<tr>
                                   <td>${item.item_id}</td>
                                   <td>${item.product_name}</td>
@@ -25,21 +26,23 @@ $(document).ready(function () {
                                   <td>${Math.floor(item.price)} 円</td>
                               </tr>`;
               // 合計点数と合計金額を計算
-              
+              console.log("totalQuantity:" + totalQuantity);
+              console.log("totalPrice:" + totalPrice);
               totalQuantity += parseInt(item.quantity);
               totalPrice += parseInt(item.price);
+              // エラー
+              // totalPrice += parseInt(item.price * item.Quantity);
+              // totalPrice += 130 * (6 -5); 
+              console.log("totalQuantity:" + totalQuantity);
+              console.log("totalPrice:" + totalPrice);
+              // if(item.quantity > 1){
+              //   quantityPrice += parseInt(item.price)
+              // }else{
+              //   quantityPrice += item.price;
+              // }
 
-              // `<tfoot>` に合計値を反映
-              $("#cart-items tfoot").html(`
-                <tr>
-                  <td colspan="2"><strong>合計</strong></td>
-                  <td><strong>${totalQuantity}</strong> 点</td>
-                  <td><strong>${Math.floor(totalPrice)} 円</strong></td>
-                </tr>
-              `);
               $("#cart-items tbody").html(tableContent);
               console.log("合計点数:", totalQuantity, "合計金額(税抜き):", Math.floor(totalPrice));
-
 
               // もし age_verification が true なら年齢確認を行う
               console.log(item.age_verification);
@@ -52,6 +55,15 @@ $(document).ready(function () {
               }
             });
           }
+          // `<tfoot>` に合計値を反映
+          $("#cart-items tfoot").html(`
+          <tr>
+            <td colspan="2"><strong>合計</strong></td>
+            <td><strong>${totalQuantity}</strong> 点</td>
+            <td><strong>${Math.floor(totalPrice)} 円</strong></td>
+            </tr>
+          `);
+
           $("#cart-items tbody").html(tableContent);
           console.log("requiresAgeVerification の値:", requiresAgeVerification);
           window.requiresAgeVerification = requiresAgeVerification; // これを追加

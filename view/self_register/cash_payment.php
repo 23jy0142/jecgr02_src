@@ -62,7 +62,7 @@ $total_amount_tax = get_item_tax($selfregister_id);
                 <div><h2 id="pay_text">合計点数:</h2> <span id="total-quantity" data-total="<?= $total_quantity ?>"><?= $total_quantity ?> 点</span></div>
                 <div><h2 id="pay_text">投入金額:</h2> <input type="number" min="0" step="1" id="input-amount" placeholder="投入金額" oninput="calculateChange()"></div>
                 <div><h2 id="enoughpay_text">おつり:</h2> <span id="change">0 円</span></div>
-                <div><h2 id="pay_text">不足金額:</h2><?= $total_amount_tax ?> 円</div>
+                <div><h2>不足金額:</h2> <span id="pay_change"> <?= $total_amount_tax?> 円</span></div>
             </div>
         </div>
         <!-- 画面全体の右部分 -->
