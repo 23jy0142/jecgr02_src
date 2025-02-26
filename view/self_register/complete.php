@@ -116,7 +116,7 @@ try {
           <h2 id="under_msg">お釣りの取り忘れにご注意ください</h2>
           <div class="change_pay">
               <h2>おつり</h2>
-              <p><strong class="change_text">おつり: <?= floor($change)?> 円</strong></p>
+              <p><strong class="change_text">おつり: <?= floor(round($change, 5))?> 円</strong></p>
           </div>
         </div>
       </div>
