@@ -32,7 +32,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $items = [];
     
     while ($cart_row = mysqli_fetch_assoc($cart_result)) {
-        $total_price += floor($cart_row["price"]) ; // 小数点以下切り捨て
+        $total_price += floor($cart_row["price"]*$cart_row["quantity"]) ; // 小数点以下切り捨て
         $items[] = $cart_row;
     }
 
